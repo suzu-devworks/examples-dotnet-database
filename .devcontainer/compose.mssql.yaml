@@ -1,0 +1,32 @@
+services:
+  mssql:
+    # https://mcr.microsoft.com/artifact/mar/mssql/server/about
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      interconnect:
+        aliases:
+          - sqlserver
+    ports:
+      - 1433:1433
+    restart: no
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=sql2022@Password
+      - MSSQL_PID=Express
+      - MSSQL_LCID=1041
+      - MSSQL_COLLATION=Japanese_CI_AS
+      - TZ="Asia/Tokyo"
+    volumes:
+      - mssql-data:/var/opt/mssql/data'
+      - mssql-log:/var/opt/mssql/log'
+      - mssql-secrets:/var/opt/mssql/secrets'
+      - ./mssql/initdb.d:/docker-initdb.d
+
+volumes:
+  mssql-data:
+  mssql-log:
+  mssql-secrets:
+
+networks:
+  interconnect:
+    driver: bridge

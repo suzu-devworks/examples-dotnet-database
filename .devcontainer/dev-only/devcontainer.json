@@ -3,9 +3,7 @@
 {
   "name": "C# (.NET)",
   "dockerComposeFile": [
-    "compose.mssql.yaml",
-    "compose.pgsql.yaml",
-    "compose.develop.yaml"
+    "../compose.develop.yaml"
   ],
   "service": "dev",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",

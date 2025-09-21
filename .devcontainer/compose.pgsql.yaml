@@ -1,0 +1,25 @@
+services:
+  pgsql:
+    # https://hub.docker.com/_/postgres
+    image: postgres:17-alpine
+    networks:
+      interconnect:
+        aliases:
+          - postgres
+    ports:
+      - 5432:5432
+    restart: no
+    environment:
+      POSTGRES_PASSWORD: pg@Password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --no-locale"
+      TZ: "Asia/Tokyo"
+    volumes:
+      - pgsql-data:/var/lib/postgresql/data
+      - ./pgsql/initdb.d:/docker-entrypoint-initdb.d
+
+volumes:
+  pgsql-data:
+
+networks:
+  interconnect:
+    driver: bridge

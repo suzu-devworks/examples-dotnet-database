@@ -1,27 +1,32 @@
 {
-  "omnisharp.enableEditorConfigSupport": true,
-  "omnisharp.enableAsyncCompletion": true,
-  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
-  "csharpFormatUsings.sortOrder": "System Microsoft",
-  "csharpFormatUsings.splitGroups": false,
-  "csharpFormatUsings.removeUnnecessaryUsings": true,
+  "[csharp]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[markdown]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.markdownlint": "explicit"
+    },
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "csharpOrganizeUsings.removeUnnecessaryUsings": true,
+  "csharpOrganizeUsings.sortOrder": "System",
+  "csharpOrganizeUsings.splitGroups": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
   "files.associations": {
     ".dockerignore": "ignore",
     "appsettings*.json": "jsonc",
-    "web.config": "xml",
+    "web.config": "xml"
   },
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "[csharp]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
-  },
-  "[aspnetcorerazor]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
-  },
-  "[razor]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
-  },
-  "cSpell.words": [
-    "Contoso"
-  ]
+  "markdownlint.config": {},
+  "omnisharp.enableAsyncCompletion": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
+  "remote.autoForwardPortsFallback": 0
 }

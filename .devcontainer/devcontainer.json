@@ -3,29 +3,11 @@
 {
   "name": "C# (.NET)",
   "dockerComposeFile": [
-    "docker-compose.yml",
-    "docker-compose.sqlserver.yml"
+    "compose.mssql.yaml",
+    "compose.pgsql.yaml",
+    "compose.develop.yaml"
   ],
   "service": "dev",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "containerEnv": {
-    "CONTAINER_WORKSPACE_FOLDER": "/workspaces/${localWorkspaceFolderBasename}"
-  },
-  "remoteEnv": {
-    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-    "DOTNET_ENVIRONMENT": "Development"
-  },
-  "customizations": {
-    "vscode": {
-      "settings": {},
-      "extensions": [
-        "ms-ceintl.vscode-language-pack-ja",
-        "ms-dotnettools.csdevkit",
-        "editorconfig.editorconfig",
-        "gaoshan0621.csharp-format-usings",
-        "k--kato.docomment"
-      ]
-    }
-  },
   "remoteUser": "vscode"
 }

@@ -3,11 +3,10 @@
 [![build](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/dotnet-build.yml)
 [![CodeQL](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/github-code-scanning/codeql)
 
-A workspace for learning database programming with dotnet.
+## What is the purpose of this repository?
 
-## What is this?
+This repository serves as my personal sandbox for learning and experimenting with database programming using .NET and C#.
 
-This repository is a personal playground for the author to learn .NET programming and try out its features.
-This might be helpful to other developers having the same problem.
+The content here may be useful for other developers who are facing similar challenges.
 
-However, please note that the code described here is based on my personal opinion and may contain many inaccuracies.
+However, please note that the code presented here is based solely on my personal opinions and may contain errors or inaccuracies.

@@ -1,5 +1,8 @@
 # examples-dotnet-database
 
+[![build](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/dotnet-build.yml)
+[![CodeQL](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/github-code-scanning/codeql)
+
 A workspace for learning database programming with dotnet.
 
 ## What is this?

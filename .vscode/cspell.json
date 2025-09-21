@@ -15,6 +15,7 @@
   "dictionaries": [],
   "words": [
     "appsettings",
+    "pgsql",
     "xunit"
   ],
   "ignoreWords": [],

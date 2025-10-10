@@ -17,8 +17,7 @@ This repository uses multiple DevContainers configurations to switch between dif
 
 As of now, it is as follows:
 
-- [default](./.devcontainer/): All databases for container creation
-- [`dev-only`](./.devcontainer/dev-only/): EntityFrameworkCore.InMemory database or SQLite
+- [default](./.devcontainer/): EntityFrameworkCore.InMemory database or SQLite
 - [`mssql`](./.devcontainer/mssql/): SQL server 2022 express edition
 - [`pgsql`](./.devcontainer/pgsql/): PostgreSQL 17
 

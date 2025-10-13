@@ -18,6 +18,7 @@
         "ms-dotnettools.csdevkit",
         "jeremycaron.csharp-organize-usings",
         "aliasadidev.nugetpackagemanagergui",
+        "ms-mssql.mssql"
       ]
     }
   }

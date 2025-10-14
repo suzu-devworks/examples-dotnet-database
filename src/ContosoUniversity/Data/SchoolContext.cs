@@ -3,9 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Data;
 
-public class SchoolContext(DbContextOptions<SchoolContext> options)
-    : DbContext(options)
+public class SchoolContext : DbContext
 {
+    public SchoolContext(DbContextOptions<SchoolContext> options) : this((DbContextOptions)options)
+    { }
+
+    protected SchoolContext(DbContextOptions options) : base(options)
+    { }
+
     public override void Dispose()
     {
         System.Diagnostics.Debug.WriteLine("Dispose called.");

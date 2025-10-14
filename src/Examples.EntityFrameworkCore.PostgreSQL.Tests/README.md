@@ -5,6 +5,7 @@
 - [Create the database](#create-the-database)
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
+  - [`Cannot write DateTime with Kind=Unspecified to PostgreSQL type 'timestamp with time zone', only UTC is supported.`](#cannot-write-datetime-with-kindunspecified-to-postgresql-type-timestamp-with-time-zone-only-utc-is-supported)
 
 ## Create the database
 
@@ -67,4 +68,23 @@ dotnet list package --outdated
 
 dotnet new tool-manifest
 dotnet tool install dotnet-ef
+```
+
+### `Cannot write DateTime with Kind=Unspecified to PostgreSQL type 'timestamp with time zone', only UTC is supported.`
+
+As stated, in order to register data as a timestamp with time zone, the `DateTime`'s `DateTimeKind` must be `UTC`.
+
+If you think about it carefully, there is no DateTime type in .NET that stores TimeZone. It seems that the mapping is insufficient.
+
+The optimal solution for PostgreSQL seems to be to use a library called NodaTime, but if you only need to convert to UTC, there are probably other ways to solve the problem. One such solution is `ValueConverter`.
+
+```cs
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Student>()
+            .Property(x => x.EnrollmentDate)
+            .HasConversion<UniversalDateTimeConvertor>();
+    }
 ```

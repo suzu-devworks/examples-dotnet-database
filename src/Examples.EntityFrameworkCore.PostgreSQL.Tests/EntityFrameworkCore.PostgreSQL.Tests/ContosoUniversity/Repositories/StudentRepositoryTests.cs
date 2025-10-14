@@ -1,6 +1,7 @@
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using ContosoUniversity.Repositories;
+using Examples.EntityFrameworkCore.PostgreSQL.Tests.ContosoUniversity.Data;
 using Examples.Xunit;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +18,7 @@ public class StudentRepositoryTests : IDisposable
         services.AddLogging(builder
             => builder.AddXunit(testOutputHelper));
 
-        services.AddDbContext<SchoolContext>(options
+        services.AddDbContext<SchoolContext, PgsqlSchoolContext>(options
             => options.UseNpgsqlDefault());
 
         services.AddScoped<IStudentRepository, StudentRepository>();

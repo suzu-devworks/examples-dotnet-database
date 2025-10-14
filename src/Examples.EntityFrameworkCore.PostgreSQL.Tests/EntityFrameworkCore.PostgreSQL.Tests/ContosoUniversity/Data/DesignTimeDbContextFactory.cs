@@ -1,5 +1,4 @@
 using System.Reflection;
-using ContosoUniversity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -14,15 +13,15 @@ namespace Examples.EntityFrameworkCore.PostgreSQL.Tests.ContosoUniversity.Data;
 /// the tools bypass the other ways of creating the DbContext and use the design-time factory instead.
 /// </remarks>
 /// <see href="https://learn.microsoft.com/ja-jp/ef/core/cli/dbcontext-creation?tabs=dotnet-core-cli" />
-public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<SchoolContext>
+public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<PgsqlSchoolContext>
 {
-    public SchoolContext CreateDbContext(string[] args)
+    public PgsqlSchoolContext CreateDbContext(string[] args)
     {
-        var options = new DbContextOptionsBuilder<SchoolContext>()
+        var options = new DbContextOptionsBuilder<PgsqlSchoolContext>()
             .UseNpgsqlDefault(optionsAction: o => o.MigrationsAssembly(Assembly.GetExecutingAssembly()))
             .Options;
 
-        return new SchoolContext(options);
+        return new PgsqlSchoolContext(options);
     }
 }
 

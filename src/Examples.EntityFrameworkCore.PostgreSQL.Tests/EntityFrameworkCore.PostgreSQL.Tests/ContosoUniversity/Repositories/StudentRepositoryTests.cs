@@ -18,7 +18,7 @@ public class StudentRepositoryTests : IDisposable
         services.AddLogging(builder
             => builder.AddXunit(testOutputHelper));
 
-        services.AddDbContext<SchoolContext, PgsqlSchoolContext>(options
+        services.AddDbContext<SchoolContext, NpgsqlSchoolContext>(options
             => options.UseNpgsqlDefault());
 
         services.AddScoped<IStudentRepository, StudentRepository>();

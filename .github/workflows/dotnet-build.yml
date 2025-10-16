@@ -39,4 +39,4 @@ jobs:
 
       - name: Test
         run: |
-          dotnet test --no-build --verbosity normal src/Examples.EntityFrameworkCore.Tests/
+          dotnet test --no-build --configuration Release --verbosity normal src/Examples.EntityFrameworkCore.Tests/

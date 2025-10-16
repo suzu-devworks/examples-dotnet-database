@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Examples.Xunit;
@@ -12,14 +11,11 @@ namespace Examples.Xunit;
 /// dotnet test -l "console;verbosity=detailed"
 /// </code>
 /// </examples>
-public class XunitOutputLoggerProvider : ILoggerProvider
+public class XunitOutputLoggerProvider(
+    ITestOutputHelper testOutputHelper)
+    : ILoggerProvider
 {
-    private readonly ITestOutputHelper _testOutputHelper;
-
-    public XunitOutputLoggerProvider(ITestOutputHelper testOutputHelper)
-    {
-        _testOutputHelper = testOutputHelper;
-    }
+    private readonly ITestOutputHelper _testOutputHelper = testOutputHelper;
 
     public ILogger CreateLogger(string categoryName)
         => new XunitLogger(_testOutputHelper, categoryName);
@@ -28,7 +24,6 @@ public class XunitOutputLoggerProvider : ILoggerProvider
     {
         GC.SuppressFinalize(this);
     }
-
 
     private class XunitLogger : ILogger
     {

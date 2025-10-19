@@ -33,8 +33,6 @@ dotnet add package Microsoft.Extensions.Logging
 
 cd ../../
 
-## Examples.ContosoUniversity
-
 ## Examples.EntityFrameworkCore.Tests
 dotnet new xunit -o src/Examples.EntityFrameworkCore.Tests
 dotnet sln add src/Examples.EntityFrameworkCore.Tests

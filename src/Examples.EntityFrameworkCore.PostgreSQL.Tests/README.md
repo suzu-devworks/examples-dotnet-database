@@ -93,10 +93,6 @@ This project was initialized with the following command:
 ## Solution
 dotnet new sln -o .
 
-## Examples.EntityFrameworkCore
-## Examples.ContosoUniversity
-## Examples.Xunit
-
 ## Examples.EntityFrameworkCore.PostgreSQL.Tests
 dotnet new xunit -o src/Examples.EntityFrameworkCore.PostgreSQL.Tests
 dotnet sln add src/Examples.EntityFrameworkCore.PostgreSQL.Tests

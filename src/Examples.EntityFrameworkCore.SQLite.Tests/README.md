@@ -63,10 +63,6 @@ This project was initialized with the following command:
 ## Solution
 dotnet new sln -o .
 
-## Examples.EntityFrameworkCore
-## Examples.ContosoUniversity
-## Examples.Xunit
-
 ## Examples.EntityFrameworkCore.SQLite.Tests
 dotnet new xunit -o src/Examples.EntityFrameworkCore.SQLite.Tests
 dotnet sln add src/Examples.EntityFrameworkCore.SQLite.Tests

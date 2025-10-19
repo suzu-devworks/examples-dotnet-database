@@ -83,14 +83,10 @@ This project was initialized with the following command:
 ## Solution
 dotnet new sln -o .
 
-## Examples.EntityFrameworkCore
-## Examples.ContosoUniversity
-## Examples.Xunit
-
-## Examples.EntityFrameworkCore.SqlServer.Tests
-dotnet new xunit -o src/Examples.EntityFrameworkCore.SqlServer.Tests
-dotnet sln add src/Examples.EntityFrameworkCore.SqlServer.Tests
-cd src/Examples.EntityFrameworkCore.SqlServer.Tests
+## Examples.EntityFrameworkCore.SQLServer.Tests
+dotnet new xunit -o src/Examples.EntityFrameworkCore.SQLServer.Tests
+dotnet sln add src/Examples.EntityFrameworkCore.SQLServer.Tests
+cd src/Examples.EntityFrameworkCore.SQLServer.Tests
 
 dotnet add package Microsoft.NET.Test.Sdk
 dotnet add package xunit

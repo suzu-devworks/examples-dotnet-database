@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Examples.EntityFrameworkCore\Examples.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Examples.Xunit\Examples.Xunit.csproj" />
+    <ProjectReference Include="..\Examples.Various\Examples.Various.csproj" />
     <ProjectReference Include="..\ContosoUniversity\ContosoUniversity.csproj" />
   </ItemGroup>
 

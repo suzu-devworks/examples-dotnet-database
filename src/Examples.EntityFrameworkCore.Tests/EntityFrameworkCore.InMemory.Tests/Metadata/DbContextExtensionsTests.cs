@@ -12,7 +12,7 @@ public class DbContextExtensionsTests : IDisposable
     public DbContextExtensionsTests()
     {
         var options = new DbContextOptionsBuilder<SchoolContext>()
-            .UseInMemoryDatabaseDefault()
+            .UseInMemoryDatabase("Examples.EntityFrameworkCore.InMemory")
             .Options;
 
         _context = new SchoolContext(options);

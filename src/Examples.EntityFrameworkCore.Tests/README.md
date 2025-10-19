@@ -24,8 +24,16 @@ dotnet add package Microsoft.EntityFrameworkCore.Relational
 
 cd ../../
 
+## Examples.Various
+dotnet new classlib -o src/Examples.Various
+dotnet sln add src/Examples.Various
+cd src/Examples.Various
+
+dotnet add package Microsoft.Extensions.Logging
+
+cd ../../
+
 ## Examples.ContosoUniversity
-## Examples.Xunit
 
 ## Examples.EntityFrameworkCore.Tests
 dotnet new xunit -o src/Examples.EntityFrameworkCore.Tests
@@ -39,9 +47,8 @@ dotnet add package coverlet.collector
 dotnet add package Microsoft.EntityFrameworkCore.InMemory
 
 dotnet add reference src/Examples.EntityFrameworkCore/
+dotnet add reference src/Examples.Various/
 dotnet add reference src/Examples.ContosoUniversity/
-dotnet add reference src/Examples.Xunit/
-
 cd ../../
 
 # Update outdated package

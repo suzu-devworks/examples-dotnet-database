@@ -3,7 +3,7 @@ using ContosoUniversity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Examples.EntityFrameworkCore.SQLite.Tests.ContosoUniversity.Data;
+namespace Examples.ContosoUniversity.SQLite.Data;
 
 /// <summary>
 /// Design-time DbContext factory.
@@ -18,8 +18,9 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<SchoolCont
 {
     public SchoolContext CreateDbContext(string[] args)
     {
+        var connectionString = @"Data Source=ContosoUniversity.db;Cache=Shared";
         var options = new DbContextOptionsBuilder<SchoolContext>()
-            .UseSqliteDefault(optionsAction: o => o.MigrationsAssembly(Assembly.GetExecutingAssembly()))
+            .UseSqlite(connectionString, o => o.MigrationsAssembly(Assembly.GetExecutingAssembly()))
             .Options;
 
         return new SchoolContext(options);

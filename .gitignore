@@ -411,6 +411,7 @@ Migrations/
 ## SQLite
 *.db
 *.sqlite
+!*.sqlite/
 *.sqlite3
 *.db-journal
 *.db-wal

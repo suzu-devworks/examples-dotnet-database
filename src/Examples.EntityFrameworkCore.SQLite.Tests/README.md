@@ -3,6 +3,9 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [Create the database](#create-the-database)
+- [Types of connection strings](#types-of-connection-strings)
+  - [Basic](#basic)
+  - [Sharable in-memory](#sharable-in-memory)
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
 
@@ -13,9 +16,6 @@ The following steps use migrations to create a database.
 Installing the tools:
 
 ```shell
-dotnet tool install --global dotnet-ef
-
-# or restore workspace tools
 dotnet tool restore
 ```
 
@@ -30,6 +30,28 @@ Apply Migrations:
 ```shell
 dotnet ef database update
 ```
+
+## Types of connection strings
+
+### Basic
+
+A standard connection string, persisted in the specified file.
+
+`Data Source=Application.db;Cache=Shared`
+
+### Sharable in-memory
+
+SQLite uses the in-memory format below.
+
+`Data Source=:memory:`
+
+However, this format doesn't work properly with EntityFramework tests because Open and Close are performed automatically.
+
+Therefore, we'll use a shareable in-memory format.
+
+`Data Source=Sharable:Mode=Memory;Cache=Shared`
+
+- [Connection strings - Microsoft.Data.Sqlite | Microsoft Learn](https://learn.microsoft.com/ja-jp/dotnet/standard/data/sqlite/connection-strings)
 
 ## Development
 
@@ -58,8 +80,10 @@ dotnet add package Microsoft.EntityFrameworkCore.SQLite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 
 dotnet add reference src/Examples.EntityFrameworkCore/
-dotnet add reference src/Examples.Xunit/
+dotnet add reference src/Examples.Various/
 dotnet add reference src/Examples.ContosoUniversity/
+
+dotnet user-secrets init
 cd ../../
 
 # Update outdated package

@@ -1,12 +1,25 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
-  "name": "C# (.NET)",
+  "name": "SQLServer with C# (.NET)",
   "dockerComposeFile": [
     "../compose.mssql.yaml",
     "../compose.develop.yaml"
   ],
   "service": "dev",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "streetsidesoftware.code-spell-checker",
+        "DavidAnson.vscode-markdownlint",
+        "ms-dotnettools.csdevkit",
+        "jeremycaron.csharp-organize-usings",
+        "aliasadidev.nugetpackagemanagergui",
+        "ms-mssql.mssql"
+      ]
+    }
+  }
 }

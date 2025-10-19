@@ -404,3 +404,18 @@ FodyWeavers.xsd
 [Tt]emp/
 .mono/
 .DS_Store
+
+## dotnet ef
+Migrations/
+
+## SQLite
+*.db
+*.sqlite
+!*.sqlite/
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# secrets
+.db_password.txt

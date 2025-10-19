@@ -1,26 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>$(LatestFramework)</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Examples.EntityFrameworkCore</RootNamespace>
-
+    <RootNamespace>Examples</RootNamespace>
     <IsPackable>false</IsPackable>
+    <UserSecretsId>63f8b4d8-166c-4877-aa46-b0b6ac6c5226</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ChainingAssertion.Core.Xunit" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.10" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4">
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -32,8 +32,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Examples.EntityFrameworkCore\Examples.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Examples.Xunit\Examples.Xunit.csproj" />
-    <ProjectReference Include="..\Examples.ContosoUniversity\Examples.ContosoUniversity.csproj" />
+    <ProjectReference Include="..\Examples.Various\Examples.Various.csproj" />
+    <ProjectReference Include="..\ContosoUniversity\ContosoUniversity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="Xunit.Abstractions" />
   </ItemGroup>
 
 </Project>

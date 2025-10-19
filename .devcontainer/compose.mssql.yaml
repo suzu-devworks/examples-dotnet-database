@@ -9,9 +9,11 @@ services:
     ports:
       - 1433:1433
     restart: no
+    secrets:
+      - db_password
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=sql2022@Password
+      - MSSQL_SA_PASSWORD_FILE=/run/secrets/db_password
       - MSSQL_PID=Express
       - MSSQL_LCID=1041
       - MSSQL_COLLATION=Japanese_CI_AS
@@ -21,6 +23,10 @@ services:
       - mssql-log:/var/opt/mssql/log'
       - mssql-secrets:/var/opt/mssql/secrets'
       - ./mssql/initdb.d:/docker-initdb.d
+
+secrets:
+   db_password:
+     file: ../.db_password.txt
 
 volumes:
   mssql-data:

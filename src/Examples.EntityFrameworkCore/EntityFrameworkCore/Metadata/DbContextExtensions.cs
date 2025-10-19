@@ -7,12 +7,12 @@ namespace Examples.EntityFrameworkCore.Metadata;
 public static class DbContextExtensions
 {
     public static string? GetTableName<T>(this DbContext dbContext, T? _ = default)
+        => dbContext.GetTableName(typeof(T));
+
+    public static string? GetTableName(this DbContext dbContext, Type modelType)
     {
-        var entityType = dbContext.FindEntityType<T>();
-        if (entityType is null)
-        {
-            throw new InvalidOperationException($"IEntityType not found: Type=\"{typeof(T)}\".");
-        }
+        var entityType = dbContext.Model.FindEntityType(modelType)
+            ?? throw new InvalidOperationException($"EntityType not found: Type=\"{modelType}\".");
 
         var fromClause = dbContext.Database.IsSchemaSupported()
             ? entityType.GetSchemaQualifiedTableName()
@@ -23,23 +23,25 @@ public static class DbContextExtensions
 
     private static bool IsSchemaSupported(this DatabaseFacade database)
     {
-        var supported = (database.ProviderName == "Microsoft.EntityFrameworkCore.SqlServer");
+        var supported = !string.IsNullOrEmpty(database.ProviderName) &&
+                    SchemaSupportedProviderNames.Contains(database.ProviderName);
 
         return supported;
     }
 
+    private static readonly HashSet<string> SchemaSupportedProviderNames = [
+        "Microsoft.EntityFrameworkCore.SqlServer"
+    ];
 
     public static IReadOnlyList<IProperty> FindPrimaryKeyProperties<T>(this DbContext dbContext, T? _ = default)
-        => dbContext.FindEntityType<T>()?.FindPrimaryKey()?.Properties
+        => dbContext.Model.FindEntityType<T>()?.FindPrimaryKey()?.Properties
             ?? Enumerable.Empty<IProperty>().ToList().AsReadOnly();
 
-
-    public static IReadOnlyList<IProperty> FindProperties<T>(this DbContext dbContext, T? _, IEnumerable<string> propertyNames)
-        => dbContext.FindEntityType<T>()?.FindProperties(propertyNames.ToList())
+    public static IReadOnlyList<IProperty> FindProperties<T>(this DbContext dbContext, T? _, IReadOnlyList<string> propertyNames)
+        => dbContext.Model.FindEntityType<T>()?.FindProperties(propertyNames)
             ?? Enumerable.Empty<IProperty>().ToList().AsReadOnly();
 
-
-    private static IEntityType? FindEntityType<T>(this DbContext dbContext)
-        => dbContext.Model.FindEntityType(typeof(T));
+    private static IEntityType? FindEntityType<T>(this IModel model)
+        => model.FindEntityType(typeof(T));
 
 }

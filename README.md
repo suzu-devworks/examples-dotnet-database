@@ -22,3 +22,9 @@ As of now, it is as follows:
 - [`pgsql`](./.devcontainer/pgsql/): PostgreSQL 17
 
 To switch between containers, please use the `Dev Containers: Switch Container` command from the Command Palette (F1).
+
+First, make sure you have the password for your database instance ready.
+
+```shell
+echo %PASSWORD% > .db_password.txt
+```

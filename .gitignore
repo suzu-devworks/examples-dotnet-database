@@ -415,3 +415,6 @@ Migrations/
 *.db-journal
 *.db-wal
 *.db-shm
+
+# secrets
+.db_password.txt

@@ -1,8 +1,9 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
-namespace Examples.EntityFrameworkCore.PostgreSQL.Tests.ContosoUniversity.Data;
+namespace Examples.ContosoUniversity.PostgreSQL.Data;
 
 /// <summary>
 /// Design-time DbContext factory.
@@ -17,8 +18,16 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<NpgsqlScho
 {
     public NpgsqlSchoolContext CreateDbContext(string[] args)
     {
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddUserSecrets<DesignTimeDbContextFactory>(optional: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+        var connectionString = configuration.GetConnectionString("ContosoUniversity")
+            ?? throw new InvalidOperationException("ConnectionStrings:ContosoUniversity is required.");
+
         var options = new DbContextOptionsBuilder<NpgsqlSchoolContext>()
-            .UseNpgsqlDefault(optionsAction: o => o.MigrationsAssembly(Assembly.GetExecutingAssembly()))
+            .UseNpgsql(connectionString, o => o.MigrationsAssembly(Assembly.GetExecutingAssembly()))
             .Options;
 
         return new NpgsqlSchoolContext(options);

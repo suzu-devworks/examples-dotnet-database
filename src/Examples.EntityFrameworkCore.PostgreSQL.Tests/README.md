@@ -16,11 +16,16 @@ The following steps use migrations to create a database.
 Installing the tools:
 
 ```shell
-dotnet tool install --global dotnet-ef
-
-# or restore workspace tools
 dotnet tool restore
 ```
+
+Set ConnectionStrings:
+
+```shell
+dotnet user-secrets set ConnectionStrings:ContosoUniversity "Host=postgres;Database=contoso;Username=postgres;Password=$(cat ../../.db_password.txt)"
+```
+
+Or Use environment variable `ConnectionStrings__ContosoUniversity`.
 
 Add a Migration:
 
@@ -102,13 +107,17 @@ dotnet add package xunit
 dotnet add package xunit.runner.visualstudio
 dotnet add package coverlet.collector
 dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
+dotnet add package Microsoft.Extensions.Configuration.UserSecrets
 dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime
 dotnet add package EFCore.NamingConventions
 
 dotnet add reference src/Examples.EntityFrameworkCore/
-dotnet add reference src/Examples.Xunit/
+dotnet add reference src/Examples.Various/
 dotnet add reference src/Examples.ContosoUniversity/
+
+dotnet user-secrets init
 cd ../../
 
 # Update outdated package

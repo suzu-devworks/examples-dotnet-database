@@ -3,7 +3,7 @@ using ContosoUniversity.Models;
 using Examples.EntityFrameworkCore.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Examples.EntityFrameworkCore.PostgreSQL.Tests.ContosoUniversity.Data;
+namespace Examples.ContosoUniversity.PostgreSQL.Data;
 
 public class NpgsqlSchoolContext(DbContextOptions<NpgsqlSchoolContext> options)
     : SchoolContext(options)

@@ -2,8 +2,9 @@ using System.Reflection;
 using ContosoUniversity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
-namespace Examples.EntityFrameworkCore.SqlServer.Tests.ContosoUniversity.Data;
+namespace Examples.ContosoUniversity.SQLServer.Data;
 
 /// <summary>
 /// Design-time DbContext factory.
@@ -18,8 +19,16 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<SchoolCont
 {
     public SchoolContext CreateDbContext(string[] args)
     {
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddUserSecrets<DesignTimeDbContextFactory>(optional: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+        var connectionString = configuration.GetConnectionString("ContosoUniversity")
+            ?? throw new InvalidOperationException("ConnectionStrings:ContosoUniversity is required.");
+
         var options = new DbContextOptionsBuilder<SchoolContext>()
-            .UseSqlServerDefault(optionsAction: o => o.MigrationsAssembly(Assembly.GetExecutingAssembly()))
+            .UseSqlServer(connectionString, o => o.MigrationsAssembly(Assembly.GetExecutingAssembly()))
             .Options;
 
         return new SchoolContext(options);

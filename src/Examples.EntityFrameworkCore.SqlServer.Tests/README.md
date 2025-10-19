@@ -14,11 +14,16 @@ The following steps use migrations to create a database.
 Installing the tools:
 
 ```shell
-dotnet tool install --global dotnet-ef
-
-# or restore workspace tools
 dotnet tool restore
 ```
+
+Set ConnectionStrings:
+
+```shell
+dotnet user-secrets set ConnectionStrings:ContosoUniversity "Data Source=sqlserver;Initial Catalog=ContosoUniversity;User ID=sa;Password=$(cat ../../.db_password.txt);Persist Security Info=False;TrustServerCertificate=yes"
+```
+
+Or Use environment variable `ConnectionStrings__ContosoUniversity`.
 
 Add a Migration:
 
@@ -91,16 +96,22 @@ dotnet add package Microsoft.NET.Test.Sdk
 dotnet add package xunit
 dotnet add package xunit.runner.visualstudio
 dotnet add package coverlet.collector/
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.Data.SqlClient
 dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
+dotnet add package Microsoft.Extensions.Configuration.UserSecrets
 
 dotnet add reference src/Examples.EntityFrameworkCore/
-dotnet add reference src/Examples.Xunit/
+dotnet add reference src/Examples.Various/
 dotnet add reference src/Examples.ContosoUniversity/
 
+dotnet user-secrets init
 cd ../../
 
 # Update outdated package
 dotnet list package --outdated
+
+dotnet new tool-manifest
+dotnet tool install dotnet-ef
 ```

@@ -3,7 +3,7 @@ using ContosoUniversity.Models;
 using ContosoUniversity.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.ContosoUniversity.SQLServer.Tests.Repositories;
+namespace Examples.ContosoUniversity.SqlServer.Tests.Repositories;
 
 public class StudentRepositoryTests(
     ContosoUniversityFixture fixture,
@@ -17,7 +17,7 @@ public class StudentRepositoryTests(
     {
         var repository = _fixture.ServiceProvider.GetRequiredService<IStudentRepository>();
 
-        var records = await repository.FindAllAsync();
+        var records = await repository.FindAllAsync(TestContext.Current.CancellationToken);
 
         Assert.Equal(8, records.Count());
     }
@@ -31,7 +31,7 @@ public class StudentRepositoryTests(
         // spell-checker: words Anand Alonso
         var repository = _fixture.ServiceProvider.GetRequiredService<IStudentRepository>();
 
-        var record = await repository.FindAsync(id);
+        var record = await repository.FindAsync(id, TestContext.Current.CancellationToken);
 
         Assert.True(record is not null);
         Assert.Equal(id, record.ID);
@@ -43,7 +43,7 @@ public class StudentRepositoryTests(
     {
         using var scoped = _fixture.ServiceProvider.CreateScope();
         var context = scoped.ServiceProvider.GetRequiredService<SchoolContext>();
-        await context.Database.BeginTransactionAsync();
+        await context.Database.BeginTransactionAsync(TestContext.Current.CancellationToken);
 
         var repository = scoped.ServiceProvider.GetRequiredService<IStudentRepository>();
 
@@ -55,11 +55,11 @@ public class StudentRepositoryTests(
         };
         // spell-checker: words Hoge
 
-        await repository.AddAsync(input);
+        await repository.AddAsync(input, TestContext.Current.CancellationToken);
 
         context.ChangeTracker.Clear();
 
-        var records = await repository.FindAllAsync();
+        var records = await repository.FindAllAsync(TestContext.Current.CancellationToken);
         Assert.Equal(9, records.Count());
     }
 

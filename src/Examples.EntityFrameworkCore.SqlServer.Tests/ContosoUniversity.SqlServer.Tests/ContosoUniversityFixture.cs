@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Examples.ContosoUniversity.SQLServer.Tests;
+namespace Examples.ContosoUniversity.SqlServer.Tests;
 
 public class ContosoUniversityFixture : IDisposable
 {
-    private static readonly object _lock = new();
+    private static readonly Lock _lock = new();
     private static bool _databaseInitialized;
 
     private readonly ServiceProvider _serviceProvider;

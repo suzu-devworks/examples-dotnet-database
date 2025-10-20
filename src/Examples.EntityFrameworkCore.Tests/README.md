@@ -34,19 +34,19 @@ dotnet add package Microsoft.Extensions.Logging
 cd ../../
 
 ## Examples.EntityFrameworkCore.Tests
-dotnet new xunit -o src/Examples.EntityFrameworkCore.Tests
+dotnet new xunit3 -o src/Examples.EntityFrameworkCore.Tests
 dotnet sln add src/Examples.EntityFrameworkCore.Tests
 cd src/Examples.EntityFrameworkCore.Tests
 
 dotnet add package Microsoft.NET.Test.Sdk
-dotnet add package xunit
+dotnet add package xunit.v3
 dotnet add package xunit.runner.visualstudio
 dotnet add package coverlet.collector
 dotnet add package Microsoft.EntityFrameworkCore.InMemory
 
-dotnet add reference src/Examples.EntityFrameworkCore/
-dotnet add reference src/Examples.Various/
-dotnet add reference src/Examples.ContosoUniversity/
+dotnet add reference ../Examples.EntityFrameworkCore/
+dotnet add reference ../Examples.Various/
+dotnet add reference ../ContosoUniversity/
 cd ../../
 
 # Update outdated package

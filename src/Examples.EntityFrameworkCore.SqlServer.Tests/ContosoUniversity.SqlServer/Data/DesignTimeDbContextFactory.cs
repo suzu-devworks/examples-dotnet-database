@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Examples.ContosoUniversity.SQLServer.Data;
+namespace Examples.ContosoUniversity.SqlServer.Data;
 
 /// <summary>
 /// Design-time DbContext factory.

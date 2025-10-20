@@ -3,7 +3,7 @@ using ContosoUniversity.Models;
 using ContosoUniversity.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.ContosoUniversity.SQLServer.Tests.Repositories;
+namespace Examples.ContosoUniversity.SqlServer.Tests.Repositories;
 
 public class StudentRepositoryTests(
     ContosoUniversityFixture fixture,

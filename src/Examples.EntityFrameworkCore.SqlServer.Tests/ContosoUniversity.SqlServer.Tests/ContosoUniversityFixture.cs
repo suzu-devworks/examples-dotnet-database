@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Examples.ContosoUniversity.SQLServer.Tests;
+namespace Examples.ContosoUniversity.SqlServer.Tests;
 
 public class ContosoUniversityFixture : IDisposable
 {

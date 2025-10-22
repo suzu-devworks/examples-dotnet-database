@@ -111,7 +111,7 @@ dotnet add package EFCore.NamingConventions
 
 dotnet add reference ../Examples.EntityFrameworkCore/
 dotnet add reference ../Examples.Various/
-dotnet add reference ../ContosoUniversity/
+dotnet add reference ../ContosoUniversity.EntityFrameworkCore/
 
 dotnet user-secrets init
 cd ../../

@@ -10,9 +10,11 @@ public class StudentRepositoryTests(
     ITestOutputHelper output)
     : IClassFixture<ContosoUniversityFixture>
 {
+    public static bool IsDBAvailable => ContosoUniversityFixture.Enabled;
+
     private readonly ContosoUniversityFixture _fixture = fixture.UseLogger(output.WriteLine);
 
-    [Fact]
+    [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
     public async Task FindAllAsync_ReturnsAllRecords()
     {
         var repository = _fixture.ServiceProvider.GetRequiredService<IStudentRepository>();
@@ -22,7 +24,7 @@ public class StudentRepositoryTests(
         Assert.Equal(8, records.Count());
     }
 
-    [Theory]
+    [Theory(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
     [InlineData(1, "Alexander")]
     [InlineData(2, "Alonso")]
     [InlineData(3, "Anand")]
@@ -38,7 +40,7 @@ public class StudentRepositoryTests(
         Assert.Equal(lastName, record.LastName);
     }
 
-    [Fact]
+    [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
     public async Task AddAsync_WithNewData_IsAdded()
     {
         using var scoped = _fixture.ServiceProvider.CreateScope();

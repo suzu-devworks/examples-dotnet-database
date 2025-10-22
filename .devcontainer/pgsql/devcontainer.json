@@ -3,12 +3,21 @@
 {
   "name": "PostgreSQL with C# (.NET)",
   "dockerComposeFile": [
-    "../compose.pgsql.yaml",
+    "../compose.yaml",
     "../compose.develop.yaml"
   ],
   "service": "dev",
+  "runServices": [
+    "dev",
+    "pgsql"
+  ],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "postAttachCommand": "/bin/sh ./.devcontainer/postAttachCommand.sh",
   "remoteUser": "vscode",
+  "remoteEnv": {
+    "MSSQL_SERVICE": "",
+    "POSTGRES_SERVICE": "postgres"
+  },
   "customizations": {
     "vscode": {
       "extensions": [

@@ -54,9 +54,6 @@ dotnet new sln -o .
 dotnet new classlib -o src/ContosoUniversity
 dotnet sln add src/ContosoUniversity
 cd src/ContosoUniversity
-
-# for Infrastructure layer
-dotnet add package Microsoft.EntityFrameworkCore.Relational
 cd ../../
 
 # Update outdated package

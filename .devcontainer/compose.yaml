@@ -24,6 +24,26 @@ services:
       - mssql-secrets:/var/opt/mssql/secrets'
       - ./mssql/initdb.d:/docker-initdb.d
 
+  pgsql:
+    # https://hub.docker.com/_/postgres
+    image: postgres:17-alpine
+    networks:
+      interconnect:
+        aliases:
+          - postgres
+    ports:
+      - 5432:5432
+    restart: no
+    secrets:
+      - db_password
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --no-locale"
+      TZ: "Asia/Tokyo"
+    volumes:
+      - pgsql-data:/var/lib/postgresql/data
+      - ./pgsql/initdb.d:/docker-entrypoint-initdb.d
+
 secrets:
    db_password:
      file: ../.db_password.txt
@@ -32,6 +52,7 @@ volumes:
   mssql-data:
   mssql-log:
   mssql-secrets:
+  pgsql-data:
 
 networks:
   interconnect:

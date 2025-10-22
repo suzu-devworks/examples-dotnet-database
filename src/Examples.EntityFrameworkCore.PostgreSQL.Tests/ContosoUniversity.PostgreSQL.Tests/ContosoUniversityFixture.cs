@@ -11,6 +11,7 @@ namespace Examples.ContosoUniversity.PostgreSQL.Tests;
 
 public class ContosoUniversityFixture : IDisposable
 {
+    public static bool Enabled => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("POSTGRES_SERVICE"));
     private static readonly Lock _lock = new();
     private static bool _databaseInitialized;
 
@@ -27,12 +28,7 @@ public class ContosoUniversityFixture : IDisposable
                 .AddFilter("ContosoUniversity", LogLevel.Trace)
                 .AddDelegateLogger(x => _logging?.Invoke($"[{DateTime.Now:HH:mm:ss.fff}] {x.LogLevel}: {x.Message}")));
 
-        var connectionString = GetConnectionString();
-        services.AddDbContext<SchoolContext, NpgsqlSchoolContext>(builder
-            => builder.UseNpgsql(connectionString)
-        );
-
-        services.AddScoped<IStudentRepository, StudentRepository>();
+        ConfigureServices(services);
 
         _serviceProvider = services.BuildServiceProvider();
 
@@ -45,6 +41,7 @@ public class ContosoUniversityFixture : IDisposable
             }
         }
     }
+
 
     public void Dispose()
     {
@@ -73,8 +70,28 @@ public class ContosoUniversityFixture : IDisposable
         return connectionString;
     }
 
+    private static void ConfigureServices(ServiceCollection services)
+    {
+        if (!Enabled)
+        {
+            return;
+        }
+
+        var connectionString = GetConnectionString();
+        services.AddDbContext<SchoolContext, NpgsqlSchoolContext>(builder
+            => builder.UseNpgsql(connectionString)
+        );
+
+        services.AddScoped<IStudentRepository, StudentRepository>();
+    }
+
     private void InitializeDatabase()
     {
+        if (!Enabled)
+        {
+            return;
+        }
+
         var context = ServiceProvider.GetRequiredService<SchoolContext>();
 
         context.Database.EnsureDeleted();

@@ -1,14 +1,23 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
-  "name": "SQLServer with C# (.NET)",
+  "name": "SqlServer with C# (.NET)",
   "dockerComposeFile": [
-    "../compose.mssql.yaml",
+    "../compose.yaml",
     "../compose.develop.yaml"
   ],
   "service": "dev",
+  "runServices": [
+    "dev",
+    "mssql"
+  ],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "postCreateCommand": "/bin/sh ./.devcontainer/postAttachCommand.sh",
   "remoteUser": "vscode",
+  "remoteEnv": {
+    "MSSQL_SERVICE": "sqlserver",
+    "POSTGRES_SERVICE": ""
+  },
   "customizations": {
     "vscode": {
       "extensions": [

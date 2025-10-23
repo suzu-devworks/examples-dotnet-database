@@ -25,6 +25,8 @@
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="Npgsql" Version="9.0.4" />
     <PackageReference Include="xunit.v3" Version="3.1.0" />
@@ -36,6 +38,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ContosoUniversity\ContosoUniversity.csproj" />
+    <ProjectReference Include="..\Examples.Various\Examples.Various.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ContosoUniversity.PostgreSQL.Tests/Repositories/" />
   </ItemGroup>
 
 </Project>

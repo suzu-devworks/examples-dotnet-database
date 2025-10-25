@@ -26,10 +26,13 @@ dotnet add package xunit.runner.visualstudio
 dotnet add package coverlet.collector
 dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
 dotnet add package Microsoft.Extensions.Configuration.UserSecrets
+dotnet add package Microsoft.Extensions.DependencyInjection
+dotnet add package Microsoft.Extensions.Logging
 dotnet add package Dapper
 dotnet add package Npgsql
 
-dotnet add reference ../ContosoUniversity/
+dotnet add reference ../Examples.Various/
+dotnet add reference ../ContosoUniversity.Dapper/
 
 dotnet user-secrets init
 cd ../../

@@ -37,12 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContosoUniversity\ContosoUniversity.csproj" />
     <ProjectReference Include="..\Examples.Various\Examples.Various.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ContosoUniversity.PostgreSQL.Tests/Repositories/" />
+    <ProjectReference Include="..\ContosoUniversity.Dapper\ContosoUniversity.Dapper.csproj" />
   </ItemGroup>
 
 </Project>

@@ -40,3 +40,8 @@ cd ../../
 # Update outdated package
 dotnet list package --outdated
 ```
+
+## References
+
+- [Welcome To Learn Dapper ORM - A Dapper Tutorial for C# and .NET Core](https://www.learndapper.com/dapper-query/selecting-scalar-values)
+- [DapperLib/Dapper: Dapper - a simple object mapper for .Net](https://github.com/DapperLib/Dapper)

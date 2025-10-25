@@ -21,12 +21,16 @@ public class ContosoUniversityFixture : IDisposable
     {
         var services = new ServiceCollection();
         services.AddLogging(builder
-            // TODO SQL logging
             => builder.SetMinimumLevel(LogLevel.Information)
-                .AddFilter("Npgsql", LogLevel.Debug)
+                .AddFilter("Npgsql", LogLevel.Information)
                 .AddFilter("Examples", LogLevel.Trace)
                 .AddFilter("ContosoUniversity", LogLevel.Trace)
-                .AddDelegateLogger(x => _logging?.Invoke($"[{DateTime.Now:HH:mm:ss.fff}] {x.LogLevel}: {x.Message}")));
+                .AddDelegateLogger(x =>
+                {
+                    var message = $"[{DateTime.Now:HH:mm:ss.fff}][{x.LogLevel}]: {x.Message}";
+                    _logging?.Invoke(message);
+                    System.Diagnostics.Debug.WriteLine(message); // for vscode
+                }));
 
         ConfigureServices(services);
 
@@ -41,7 +45,6 @@ public class ContosoUniversityFixture : IDisposable
             }
         }
     }
-
 
     public void Dispose()
     {
@@ -78,7 +81,8 @@ public class ContosoUniversityFixture : IDisposable
         }
 
         var connectionString = GetConnectionString();
-        services.AddScoped<IDbConnectionProvider>(services => new NpgsqlConnectionProvider(connectionString));
+        services.AddSingleton<IDbConnectionProvider>(services =>
+            new NpgsqlConnectionProvider(connectionString, services.GetRequiredService<ILoggerFactory>()));
 
         services.AddScoped<IStudentRepository, StudentRepository>();
     }

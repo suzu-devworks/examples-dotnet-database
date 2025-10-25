@@ -21,7 +21,7 @@ public class StudentRepository(
             FROM "user".students;
             """;
 
-        using var connection = _dbConnectionProvider.OpenConnection();
+        using var connection = await _dbConnectionProvider.OpenConnectionAsync(cancelToken);
 
         var students = await connection.QueryAsync<Student>(
               new CommandDefinition(query,
@@ -41,7 +41,8 @@ public class StudentRepository(
             WHERE id = @id;
             """;
 
-        using var connection = _dbConnectionProvider.OpenConnection();
+        using var connection = await _dbConnectionProvider.OpenConnectionAsync(cancelToken);
+
         var student = await connection.QuerySingleOrDefaultAsync<Student>(
             new CommandDefinition(query,
                 parameters: new { id },
@@ -68,7 +69,8 @@ public class StudentRepository(
             VALUES (@ID, @LastName, @FirstMidName, @EnrollmentDate);
             """;
 
-        using var connection = _dbConnectionProvider.OpenConnection();
+        using var connection = await _dbConnectionProvider.OpenConnectionAsync(cancelToken);
+
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
                 parameters: student,

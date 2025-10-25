@@ -1,30 +1,50 @@
 using System.Data;
+using System.Data.Common;
 using ContosoUniversity.Data;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 
 namespace Examples.ContosoUniversity.PostgreSQL.Data;
 
-public class NpgsqlConnectionProvider(
-    string connectionString
-    ) : IDbConnectionProvider
+public class NpgsqlConnectionProvider : IDbConnectionProvider, IDisposable
 {
-    public string ConnectionString { get; } = new NpgsqlConnectionStringBuilder(connectionString).ConnectionString;
-    public int? CommandTimeout => 100;
+    private readonly DbDataSource _dataSource;
 
     static NpgsqlConnectionProvider()
     {
         global::Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
     }
 
+    public NpgsqlConnectionProvider(string connectionString, ILoggerFactory loggerFactory)
+    {
+        var builder = new NpgsqlDataSourceBuilder(connectionString)
+              .UseLoggerFactory(loggerFactory);
+
+        _dataSource = builder.Build();
+    }
+    public void Dispose()
+    {
+        _dataSource.Dispose();
+        GC.SuppressFinalize(this);
+    }
+
+    public string ConnectionString => _dataSource.ConnectionString;
+    public int? CommandTimeout => 100;
+
     public IDbConnection GetConnection()
     {
-        return new NpgsqlConnection(ConnectionString);
+        return _dataSource.CreateConnection();
     }
 
     public IDbConnection OpenConnection()
     {
-        var connection = GetConnection();
-        connection.Open();
+        return _dataSource.OpenConnection();
+    }
+
+    public async ValueTask<IDbConnection> OpenConnectionAsync(CancellationToken cancellationToken = default)
+    {
+        var connection = await _dataSource.OpenConnectionAsync(cancellationToken);
         return connection;
     }
+
 }

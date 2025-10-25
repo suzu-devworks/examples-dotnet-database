@@ -11,5 +11,5 @@ public interface IDbConnectionProvider
 
     IDbConnection GetConnection();
     IDbConnection OpenConnection();
-
+    ValueTask<IDbConnection> OpenConnectionAsync(CancellationToken cancellationToken = default);
 }

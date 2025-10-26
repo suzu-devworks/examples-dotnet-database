@@ -46,7 +46,7 @@ dotnet add package Microsoft.EntityFrameworkCore.InMemory
 
 dotnet add reference ../Examples.EntityFrameworkCore/
 dotnet add reference ../Examples.Various/
-dotnet add reference ../ContosoUniversity.EntityFrameworkCore/
+dotnet add reference ../ContosoUniversity/
 cd ../../
 
 # Update outdated package

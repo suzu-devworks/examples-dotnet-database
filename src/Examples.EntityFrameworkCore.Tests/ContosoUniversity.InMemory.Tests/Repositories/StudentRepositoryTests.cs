@@ -1,4 +1,4 @@
-using ContosoUniversity.Data;
+using ContosoUniversity.EntityFrameworkCore.Data;
 using ContosoUniversity.Models;
 using ContosoUniversity.Repositories;
 using Microsoft.Extensions.DependencyInjection;

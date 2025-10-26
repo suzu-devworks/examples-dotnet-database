@@ -1,5 +1,5 @@
 using System.Reflection;
-using ContosoUniversity.Data;
+using ContosoUniversity.EntityFrameworkCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -25,5 +25,5 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<SchoolCont
 
         return new SchoolContext(options);
     }
-}
 
+}

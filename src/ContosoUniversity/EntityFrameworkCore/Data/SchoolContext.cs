@@ -1,7 +1,7 @@
 using ContosoUniversity.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContosoUniversity.Data;
+namespace ContosoUniversity.EntityFrameworkCore.Data;
 
 public class SchoolContext : DbContext
 {
@@ -21,7 +21,6 @@ public class SchoolContext : DbContext
     public DbSet<Student> Students { get; set; } = default!;
     public DbSet<Enrollment> Enrollments { get; set; } = default!;
     public DbSet<Course> Courses { get; set; } = default!;
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

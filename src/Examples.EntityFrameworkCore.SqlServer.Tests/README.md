@@ -100,7 +100,7 @@ dotnet add package Microsoft.Extensions.Configuration.UserSecrets
 
 dotnet add reference ../Examples.EntityFrameworkCore/
 dotnet add reference ../Examples.Various/
-dotnet add reference ../ContosoUniversity.EntityFrameworkCore/
+dotnet add reference ../ContosoUniversity/
 
 dotnet user-secrets init
 cd ../../

@@ -1,4 +1,5 @@
-using ContosoUniversity.Data;
+using ContosoUniversity.EntityFrameworkCore.Data;
+using ContosoUniversity.EntityFrameworkCore.Repositories;
 using ContosoUniversity.Repositories;
 using Examples.ContosoUniversity.PostgreSQL.Data;
 using Examples.Logging;
@@ -41,7 +42,6 @@ public class ContosoUniversityFixture : IDisposable
             }
         }
     }
-
 
     public void Dispose()
     {
@@ -101,6 +101,5 @@ public class ContosoUniversityFixture : IDisposable
 
         context.SaveChanges();
     }
+
 }
-
-

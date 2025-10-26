@@ -37,7 +37,6 @@ indent_style = space
 # C# files
 [*.cs]
 
-
 #### Core EditorConfig Options ####
 
 # Indentation and spacing
@@ -104,6 +103,10 @@ dotnet_code_quality_unused_parameters = all:suggestion
 
 # Suppression preferences
 dotnet_remove_unnecessary_suppression_exclusions = none
+
+# New line preferences
+dotnet_style_allow_multiple_blank_lines_experimental = false
+dotnet_style_allow_statement_immediately_after_block_experimental = true
 
 #### C# Coding Conventions ####
 [*.cs]
@@ -374,7 +377,6 @@ dotnet_naming_symbols.private_static_readonly_fields.required_modifiers = readon
 dotnet_naming_symbols.local_functions.applicable_kinds = local_function
 dotnet_naming_symbols.local_functions.applicable_accessibilities = *
 dotnet_naming_symbols.local_functions.required_modifiers = 
-
 
 # Naming styles
 

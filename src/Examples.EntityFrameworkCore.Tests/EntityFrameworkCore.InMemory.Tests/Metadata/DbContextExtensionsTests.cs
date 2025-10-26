@@ -1,4 +1,4 @@
-using ContosoUniversity.Data;
+using ContosoUniversity.EntityFrameworkCore.Data;
 using ContosoUniversity.Models;
 using Examples.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;

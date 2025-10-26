@@ -1,6 +1,6 @@
 using ContosoUniversity.Models;
 
-namespace ContosoUniversity.Data;
+namespace ContosoUniversity.EntityFrameworkCore.Data;
 
 public static class DbInitializer
 {
@@ -63,4 +63,3 @@ public static class DbInitializer
         context.SaveChanges();
     }
 }
-

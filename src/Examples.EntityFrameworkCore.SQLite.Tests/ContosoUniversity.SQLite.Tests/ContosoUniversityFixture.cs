@@ -1,4 +1,5 @@
-using ContosoUniversity.Data;
+using ContosoUniversity.EntityFrameworkCore.Data;
+using ContosoUniversity.EntityFrameworkCore.Repositories;
 using ContosoUniversity.Repositories;
 using Examples.Logging;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +70,5 @@ public class ContosoUniversityFixture : IDisposable
 
         context.SaveChanges();
     }
+
 }
-
-

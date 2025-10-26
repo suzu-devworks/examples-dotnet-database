@@ -1,9 +1,10 @@
-using ContosoUniversity.Data;
+using ContosoUniversity.EntityFrameworkCore.Data;
 using ContosoUniversity.Models;
+using ContosoUniversity.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace ContosoUniversity.Repositories;
+namespace ContosoUniversity.EntityFrameworkCore.Repositories;
 
 public class StudentRepository(
     SchoolContext dbContext,

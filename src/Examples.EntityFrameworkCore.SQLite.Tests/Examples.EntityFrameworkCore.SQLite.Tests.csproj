@@ -37,7 +37,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Examples.EntityFrameworkCore\Examples.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Examples.Various\Examples.Various.csproj" />
-    <ProjectReference Include="..\ContosoUniversity.EntityFrameworkCore\ContosoUniversity.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\ContosoUniversity\ContosoUniversity.csproj" />
   </ItemGroup>
 
 </Project>

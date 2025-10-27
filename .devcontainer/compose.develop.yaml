@@ -4,6 +4,8 @@ services:
     networks:
       - interconnect
     tty: true
+    secrets:
+      - db_password
     environment:
       TZ: "Asia/Tokyo"
     volumes:
@@ -11,6 +13,10 @@ services:
       - /var/run/docker.sock:/var/run/docker-host.sock
       # Update this to wherever you want VS Code to mount the folder of your project
       - ../../:/workspaces:cached
+
+secrets:
+   db_password:
+     file: ../.db_password.txt
 
 networks:
   interconnect:

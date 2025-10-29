@@ -16,6 +16,7 @@
   "words": [
     "appsettings",
     "Contoso",
+    "dbcontext",
     "pgsql",
     "xunit"
   ],

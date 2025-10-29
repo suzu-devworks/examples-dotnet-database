@@ -16,7 +16,7 @@
   "words": [
     "appsettings",
     "Contoso",
-    "pgsql",
+    "dbcontext",
     "xunit"
   ],
   "ignoreWords": [],

@@ -17,6 +17,7 @@
     "appsettings",
     "Contoso",
     "dbcontext",
+    "pgsql",
     "xunit"
   ],
   "ignoreWords": [],

@@ -22,7 +22,7 @@ dotnet tool restore
 Set ConnectionStrings:
 
 ```shell
-dotnet user-secrets set ConnectionStrings:ContosoUniversity "Host=postgres;Database=contoso;Username=postgres;Password=$(cat ../../.db_password.txt)"
+dotnet user-secrets set ConnectionStrings:ContosoUniversity "Host=postgres;Database=contoso;Username=postgres;Password=$(cat /run/secrets/db_password)"
 ```
 
 Or Use environment variable `ConnectionStrings__ContosoUniversity`.

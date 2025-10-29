@@ -1,16 +1,19 @@
 # ContosoUniversity
 
-This repository is a sample library used in other test projects.
+## Table of Contents <!-- omit in toc -->
+
+- [Overview](#overview)
+- [The data model](#the-data-model)
+- [Development](#development)
+  - [How the project was initialized](#how-the-project-was-initialized)
+
+## Overview
+
+This project is a sample library that extracts the infrastructure layer of a fictional Contoso University and is referenced by other test projects for learning purposes.
 
 The following site was used as reference:
 
 - [ASP.NET Core Razor Pages with Entity Framework Core - Tutorial 1/8](https://docs.microsoft.com/ja-jp/aspnet/core/data/ef-rp/intro)
-
-## Table of Contents <!-- omit in toc -->
-
-- [The data model](#the-data-model)
-- [Development](#development)
-  - [How the project was initialized](#how-the-project-was-initialized)
 
 ## The data model
 

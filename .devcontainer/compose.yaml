@@ -19,9 +19,7 @@ services:
       - MSSQL_COLLATION=Japanese_CI_AS
       - TZ="Asia/Tokyo"
     volumes:
-      - mssql-data:/var/opt/mssql/data'
-      - mssql-log:/var/opt/mssql/log'
-      - mssql-secrets:/var/opt/mssql/secrets'
+      - mssql-data:/var/opt/mssql
       - ./mssql/initdb.d:/docker-initdb.d
 
   pgsql:
@@ -50,8 +48,6 @@ secrets:
 
 volumes:
   mssql-data:
-  mssql-log:
-  mssql-secrets:
   pgsql-data:
 
 networks:

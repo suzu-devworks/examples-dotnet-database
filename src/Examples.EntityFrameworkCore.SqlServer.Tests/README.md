@@ -20,7 +20,7 @@ dotnet tool restore
 Set ConnectionStrings:
 
 ```shell
-dotnet user-secrets set ConnectionStrings:ContosoUniversity "Data Source=sqlserver;Initial Catalog=ContosoUniversity;User ID=sa;Password=$(cat ../../.db_password.txt);Persist Security Info=False;TrustServerCertificate=yes"
+dotnet user-secrets set ConnectionStrings:ContosoUniversity "Data Source=sqlserver;Initial Catalog=ContosoUniversity;User ID=sa;Password=$(cat /run/secrets/db_password);Persist Security Info=False;TrustServerCertificate=yes"
 ```
 
 Or Use environment variable `ConnectionStrings__ContosoUniversity`.
@@ -100,7 +100,7 @@ dotnet add package Microsoft.Extensions.Configuration.UserSecrets
 
 dotnet add reference ../Examples.EntityFrameworkCore/
 dotnet add reference ../Examples.Various/
-dotnet add reference ../ContosoUniversity.EntityFrameworkCore/
+dotnet add reference ../ContosoUniversity/
 
 dotnet user-secrets init
 cd ../../

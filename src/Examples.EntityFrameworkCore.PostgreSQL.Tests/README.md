@@ -22,7 +22,7 @@ dotnet tool restore
 Set ConnectionStrings:
 
 ```shell
-dotnet user-secrets set ConnectionStrings:ContosoUniversity "Host=postgres;Database=ContosoUniversity;Username=postgres;Password=$(cat ../../.db_password.txt)"
+dotnet user-secrets set ConnectionStrings:ContosoUniversity "Host=postgres;Database=contoso_university;Username=postgres;Password=$(cat /run/secrets/db_password)"
 ```
 
 Or Use environment variable `ConnectionStrings__ContosoUniversity`.
@@ -111,7 +111,7 @@ dotnet add package EFCore.NamingConventions
 
 dotnet add reference ../Examples.EntityFrameworkCore/
 dotnet add reference ../Examples.Various/
-dotnet add reference ../ContosoUniversity.EntityFrameworkCore/
+dotnet add reference ../ContosoUniversity/
 
 dotnet user-secrets init
 cd ../../

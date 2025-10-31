@@ -4,6 +4,7 @@
 
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
+- [References](#references)
 
 ## Development
 
@@ -32,7 +33,7 @@ dotnet add package Dapper
 dotnet add package Npgsql
 
 dotnet add reference ../Examples.Various/
-dotnet add reference ../ContosoUniversity.Dapper/
+dotnet add reference ../ContosoUniversity/
 
 dotnet user-secrets init
 cd ../../

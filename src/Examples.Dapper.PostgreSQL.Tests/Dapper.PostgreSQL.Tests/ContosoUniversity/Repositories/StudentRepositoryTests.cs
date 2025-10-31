@@ -1,9 +1,9 @@
 using System.Transactions;
+using ContosoUniversity.Abstraction;
 using ContosoUniversity.Models;
-using ContosoUniversity.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.ContosoUniversity.PostgreSQL.Tests.Repositories;
+namespace Examples.Dapper.PostgreSQL.Tests.ContosoUniversity.Repositories;
 
 public class StudentRepositoryTests(
     ContosoUniversityFixture fixture,
@@ -45,6 +45,8 @@ public class StudentRepositoryTests(
     {
         var repository = _fixture.ServiceProvider.GetRequiredService<IStudentRepository>();
 
+        using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
         var input = new Student
         {
             FirstMidName = "Hoge",
@@ -53,14 +55,10 @@ public class StudentRepositoryTests(
         };
         // spell-checker: words Hoge
 
-        using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
         await repository.AddAsync(input, TestContext.Current.CancellationToken);
 
         var records = await repository.FindAllAsync(TestContext.Current.CancellationToken);
         Assert.Equal(9, records.Count());
-
-        // transaction is Rollback.
     }
 
 }

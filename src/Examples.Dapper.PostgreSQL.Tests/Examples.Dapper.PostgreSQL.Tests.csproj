@@ -9,6 +9,10 @@
     <UserSecretsId>d55f517c-0885-4e68-b690-8747fecefdab</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- <DefineConstants>USE_FACTORY</DefineConstants> -->
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
@@ -38,7 +42,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Examples.Various\Examples.Various.csproj" />
-    <ProjectReference Include="..\ContosoUniversity.Dapper\ContosoUniversity.Dapper.csproj" />
+    <ProjectReference Include="..\ContosoUniversity\ContosoUniversity.csproj" />
   </ItemGroup>
 
 </Project>

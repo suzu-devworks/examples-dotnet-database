@@ -10,7 +10,7 @@ public class StudentRepositoryTests(
     ITestOutputHelper output)
     : IClassFixture<ContosoUniversityFixture>
 {
-    public static bool IsDBAvailable => ContosoUniversityFixture.Enabled;
+    public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
     private readonly ContosoUniversityFixture _fixture = fixture.UseLogger(output.WriteLine);
 

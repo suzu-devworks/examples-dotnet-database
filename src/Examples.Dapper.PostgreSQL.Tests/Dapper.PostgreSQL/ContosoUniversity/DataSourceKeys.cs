@@ -1,4 +1,4 @@
-namespace Examples.Dapper.PostgreSQL.ContosoUniversity.Repositories;
+namespace Examples.Dapper.PostgreSQL.ContosoUniversity;
 
 public static class DataSourceKeys
 {

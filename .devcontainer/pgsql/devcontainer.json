@@ -27,8 +27,22 @@
         "ms-dotnettools.csdevkit",
         "jeremycaron.csharp-organize-usings",
         "aliasadidev.nugetpackagemanagergui",
-        "ms-ossdata.vscode-pgsql"
-      ]
+        "ms-ossdata.vscode-pgsql",
+        "ReneSaarsoo.sql-formatter-vsc"
+      ],
+      "settings": {
+        "[sql]": {
+          "editor.defaultFormatter": "ReneSaarsoo.sql-formatter-vsc",
+          "editor.formatOnPaste": true,
+          "editor.formatOnSave": true
+        },
+        "SQL-Formatter-VSCode.dataTypeCase": "upper",
+        "SQL-Formatter-VSCode.functionCase": "upper",
+        "SQL-Formatter-VSCode.identifierCase": "lower",
+        "SQL-Formatter-VSCode.keywordCase": "upper",
+        "SQL-Formatter-VSCode.dialect": "postgresql",
+        "SQL-Formatter-VSCode.expressionWidth": 80
+      }
     }
   }
 }

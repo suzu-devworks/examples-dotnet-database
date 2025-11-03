@@ -103,7 +103,8 @@ public class UsingRelationshipsTests(
         ).ToList();
 
         var suppliers = products
-            .GroupBy(p => p.SupplierID)
+            .Where(p => p.SupplierID.HasValue)
+            .GroupBy(p => p.SupplierID!.Value)
             .Select(g =>
             {
                 var supplier = g.First().Supplier!;

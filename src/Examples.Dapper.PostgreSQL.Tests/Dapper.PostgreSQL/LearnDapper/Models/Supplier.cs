@@ -1,8 +1,8 @@
 namespace Examples.Dapper.PostgreSQL.LearnDapper.Models;
 
-public class Category
+public class Supplier
 {
-    public required int CategoryID { get; init; }
+    public required int SupplierID { get; init; }
     public required string Name { get; set; }
 
     public ICollection<Product> Products { get; set; } = [];

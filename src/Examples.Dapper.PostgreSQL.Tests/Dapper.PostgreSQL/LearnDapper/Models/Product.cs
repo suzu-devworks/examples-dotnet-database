@@ -13,4 +13,7 @@ public class Product
     public bool Discontinued { get; set; }
     public DateTime? DiscontinuedDate { get; set; }
 
+    public Supplier? Supplier { get; set; }
+    public Category? Category { get; set; }
+
 }

@@ -1,5 +1,6 @@
 using ContosoUniversity.Abstraction;
 using Examples.Configuration;
+using Examples.Dapper.PostgreSQL.ContosoUniversity;
 using Examples.Dapper.PostgreSQL.ContosoUniversity.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,15 +18,16 @@ public class ContosoUniversityFixture : IDisposable
 
     public ContosoUniversityFixture()
     {
-        IConfiguration configuration = new ConfigurationBuilder()
+        IConfigurationRoot configuration = new ConfigurationBuilder()
             .AddUserSecrets<ContosoUniversityFixture>(optional: true)
             .AddEnvironmentVariables()
             .Build();
 
         var services = new ServiceCollection();
+        services.AddSingleton<IConfiguration>(configuration);
         services.AddLoggingForFixtures(_logging);
 
-        ConfigurationServices(services, configuration);
+        ConfigurationServices(services);
 
         _serviceProvider = services.BuildServiceProvider();
 
@@ -53,7 +55,7 @@ public class ContosoUniversityFixture : IDisposable
         return this;
     }
 
-    private static void ConfigurationServices(IServiceCollection services, IConfiguration configuration)
+    private static void ConfigurationServices(IServiceCollection services)
     {
         if (!DatabaseEnvironment.IsAvailable)
         {
@@ -61,6 +63,7 @@ public class ContosoUniversityFixture : IDisposable
         }
 
         var provider = services.BuildServiceProvider();
+        var configuration = provider.GetRequiredService<IConfiguration>();
         var logger = provider.GetRequiredService<ILogger<ContosoUniversityFixture>>();
 
         var connectionString = configuration.GetRequiredConnectionString("ContosoUniversity");

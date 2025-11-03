@@ -1,10 +1,8 @@
 using ContosoUniversity.Abstraction;
 using ContosoUniversity.Data;
 using ContosoUniversity.Repositories;
-using Examples.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Examples.EntityFrameworkCore.SQLite.Tests.ContosoUniversity;
 
@@ -19,12 +17,7 @@ public class ContosoUniversityFixture : IDisposable
     public ContosoUniversityFixture()
     {
         var services = new ServiceCollection();
-        services.AddLogging(builder
-            => builder.SetMinimumLevel(LogLevel.Warning)
-                .AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Information)
-                .AddFilter("Examples", LogLevel.Trace)
-                .AddFilter("ContosoUniversity", LogLevel.Trace)
-                .AddDelegateLogger(x => _logging?.Invoke($"[{DateTime.Now:HH:mm:ss.fff}] {x.LogLevel}: {x.Message}")));
+        services.AddLoggingForFixtures(_logging);
 
         var connectionString = @"Data Source=Sharable:Mode=Memory;Cache=Shared";
         services.AddDbContext<SchoolContext>(builder

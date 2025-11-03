@@ -9,7 +9,6 @@ namespace Examples.Dapper.PostgreSQL.Tests.ContosoUniversity;
 
 public class ContosoUniversityFixture : IDisposable
 {
-    public static bool Enabled => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("POSTGRES_SERVICE"));
     private static readonly Lock _lock = new();
     private static bool _databaseInitialized;
 
@@ -56,7 +55,7 @@ public class ContosoUniversityFixture : IDisposable
 
     private static void ConfigurationServices(IServiceCollection services, IConfiguration configuration)
     {
-        if (!Enabled)
+        if (!DatabaseEnvironment.IsAvailable)
         {
             return;
         }
@@ -81,7 +80,7 @@ public class ContosoUniversityFixture : IDisposable
 
     private static void InitializeDatabase()
     {
-        if (!Enabled)
+        if (!DatabaseEnvironment.IsAvailable)
         {
             return;
         }

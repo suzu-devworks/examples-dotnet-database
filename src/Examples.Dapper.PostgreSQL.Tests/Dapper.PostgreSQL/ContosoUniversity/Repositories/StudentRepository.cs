@@ -12,7 +12,7 @@ public class StudentRepository(
     ILogger<StudentRepository> logger)
     : IStudentRepository
 {
-    private readonly DbDataSource _dbConnectionFactory = dataSource;
+    private readonly DbDataSource _dbDataSource = dataSource;
     private readonly ILogger<StudentRepository> _logger = logger;
 
     public async Task<IEnumerable<Student>> FindAllAsync(CancellationToken cancelToken = default)
@@ -22,7 +22,7 @@ public class StudentRepository(
             FROM "user".students;
             """;
 
-        using var connection = await _dbConnectionFactory.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var students = await connection.QueryAsync<Student>(
               new CommandDefinition(query,
@@ -42,7 +42,7 @@ public class StudentRepository(
             WHERE id = @id;
             """;
 
-        using var connection = await _dbConnectionFactory.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var student = await connection.QuerySingleOrDefaultAsync<Student>(
             new CommandDefinition(query,
@@ -70,12 +70,11 @@ public class StudentRepository(
             VALUES (@ID, @LastName, @FirstMidName, @EnrollmentDate);
             """;
 
-        using var connection = await _dbConnectionFactory.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
                 parameters: student,
-                commandTimeout: 100,
                 cancellationToken: cancelToken));
 
         _logger.LogDebug("INSERT was successful. {effectiveRows} results.", effectiveRows);
@@ -94,7 +93,7 @@ public class StudentRepository(
             WHERE id = @ID;
             """;
 
-        using var connection = await _dbConnectionFactory.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
@@ -112,7 +111,7 @@ public class StudentRepository(
             WHERE id = @ID
             """;
 
-        using var connection = await _dbConnectionFactory.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,

@@ -13,6 +13,9 @@ VALUES
     (4, 'あくせさり'),
     (5, 'どうぐ');
 
+SELECT
+    SETVAL(PG_GET_SERIAL_SEQUENCE('categories', 'category_id'), 5);
+
 DELETE FROM suppliers;
 
 INSERT INTO
@@ -37,10 +40,21 @@ VALUES
     (530, 'せいすいや', 'メルキドの町'),
     (540, 'カギや', 'メルキドの町');
 
+SELECT
+    SETVAL(PG_GET_SERIAL_SEQUENCE('suppliers', 'supplier_id'), 600);
+
 DELETE FROM products;
 
 INSERT INTO
-    products (product_id, name, description, supplier_id, category_id, unit_price, units_in_stock)
+    products (
+        product_id,
+        name,
+        description,
+        supplier_id,
+        category_id,
+        unit_price,
+        units_in_stock
+    )
 VALUES
     (1, 'かぎ', '閉ざされたドアを開ける魔法の鍵です', 140, 5, 24, 255),
     (2, 'たけざお', '攻撃力2', 110, 1, 10, 255),
@@ -98,3 +112,6 @@ VALUES
     (54, 'キメラのつばさ', '一瞬のうちに故郷に戻ることでしょう', 522, 5, 24, 255),
     (55, 'せいすい', 'しばらくのあいだ、邪悪なものたちをよせつけずに旅することができるといわれています', 530, 5, 12, 255),
     (56, 'かぎ', '閉ざされたドアを開ける魔法の鍵です', 540, 5, 32, 255);
+
+SELECT
+    SETVAL(PG_GET_SERIAL_SEQUENCE('products', 'product_id'), 56);

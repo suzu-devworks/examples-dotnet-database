@@ -102,21 +102,26 @@ public class UsingRelationshipsTests(
             splitOn: "supplier_id, category_id")
         ).ToList();
 
-        var suppliers = products.GroupBy(p => p.SupplierID).Select(g =>
-        {
-            var supplier = g.First().Supplier!;
-            supplier.Products = [.. g];
-            return supplier;
-        })
-        .ToList();
+        var suppliers = products
+            .Where(p => p.SupplierID.HasValue)
+            .GroupBy(p => p.SupplierID!.Value)
+            .Select(g =>
+            {
+                var supplier = g.First().Supplier!;
+                supplier.Products = [.. g];
+                return supplier;
+            })
+            .ToList();
 
-        var categories = products.GroupBy(p => p.CategoryID).Select(g =>
-        {
-            var category = g.First().Category!;
-            category.Products = [.. g];
-            return category;
-        })
-        .ToList();
+        var categories = products
+            .GroupBy(p => p.CategoryID)
+            .Select(g =>
+            {
+                var category = g.First().Category!;
+                category.Products = [.. g];
+                return category;
+            })
+            .ToList();
 
         Assert.Equal(56, products.Count);
         Assert.Equal(18, suppliers.Count);

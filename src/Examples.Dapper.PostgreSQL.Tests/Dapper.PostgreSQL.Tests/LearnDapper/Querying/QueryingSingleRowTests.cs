@@ -26,7 +26,7 @@ public class QueryingSingleRowTests(
         var command = new CommandDefinition(sql, new { productID = 1 },
             cancellationToken: TestContext.Current.CancellationToken);
 
-        // In the case of a single item, there are no particular problems with any of the options, 
+        // In the case of a single item, there are no particular problems with any of the options,
         // so "Single" seems to be the clearest in terms of intent.
 
         var single = await connection.QuerySingleAsync<Product>(command);

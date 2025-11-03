@@ -35,5 +35,5 @@
     <ProjectReference Include="..\Examples.Various\Examples.Various.csproj" />
     <ProjectReference Include="..\ContosoUniversity\ContosoUniversity.csproj" />
   </ItemGroup>
-  
+
 </Project>

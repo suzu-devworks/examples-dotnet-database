@@ -69,7 +69,7 @@ public class ContosoUniversityFixture : IDisposable
             DataSourceKeys.ContosoUniversity,
             builder => builder.UseNpgsql(connectionString));
 
-#if USE_FACTORY 
+#if USE_FACTORY
         services.AddScoped<IStudentRepository, StudentFactoryRepository>();
         logger.LogInformation("Use Factory.");
 #else

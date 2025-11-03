@@ -24,7 +24,7 @@ public class UsingRelationshipsTests(
 
         var sql = """
             SELECT product_id, p.name, p.category_id, c.category_id, c.name
-            FROM products p 
+            FROM products p
             INNER JOIN categories c ON p.category_id = c.category_id
             """;
 
@@ -52,7 +52,7 @@ public class UsingRelationshipsTests(
 
         var sql = """
             SELECT product_id, p.name, p.category_id, c.category_id, c.name
-            FROM products p 
+            FROM products p
             INNER JOIN categories c ON p.category_id = c.category_id
             """;
 
@@ -85,7 +85,7 @@ public class UsingRelationshipsTests(
 
         var sql = """
             SELECT product_id, p.name, p.supplier_id, p.category_id, s.supplier_id, s.name, c.category_id, c.name
-            FROM products p 
+            FROM products p
             INNER JOIN suppliers s ON p.supplier_id = s.supplier_id
             INNER JOIN categories c ON p.category_id = c.category_id
             """;

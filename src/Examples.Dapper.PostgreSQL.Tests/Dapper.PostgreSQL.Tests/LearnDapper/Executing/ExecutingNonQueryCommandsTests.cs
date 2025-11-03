@@ -35,7 +35,7 @@ public class ExecutingNonQueryCommandsTests(
         var sql1 = """
             INSERT INTO products (category_id, name, description, unit_price)
             VALUES (@CategoryID, @Name, @Description, @UnitPrice)
-            RETURNING product_id 
+            RETURNING product_id
             """;
         var productID = await connection.ExecuteScalarAsync<int>(
             new CommandDefinition(

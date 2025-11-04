@@ -1,18 +1,16 @@
 using ContosoUniversity.Abstraction;
 using ContosoUniversity.Data;
 using ContosoUniversity.Repositories;
+using Examples.Configuration;
 using Examples.EntityFrameworkCore.PostgreSQL.ContosoUniversity.Data;
-using Examples.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Examples.EntityFrameworkCore.PostgreSQL.Tests.ContosoUniversity;
 
 public class ContosoUniversityFixture : IDisposable
 {
-    public static bool Enabled => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("POSTGRES_SERVICE"));
     private static readonly Lock _lock = new();
     private static bool _databaseInitialized;
 
@@ -21,13 +19,14 @@ public class ContosoUniversityFixture : IDisposable
 
     public ContosoUniversityFixture()
     {
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddUserSecrets<ContosoUniversityFixture>(optional: true)
+            .AddEnvironmentVariables()
+            .Build();
+
         var services = new ServiceCollection();
-        services.AddLogging(builder
-            => builder.SetMinimumLevel(LogLevel.Warning)
-                .AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Information)
-                .AddFilter("Examples", LogLevel.Trace)
-                .AddFilter("ContosoUniversity", LogLevel.Trace)
-                .AddDelegateLogger(x => _logging?.Invoke($"[{DateTime.Now:HH:mm:ss.fff}] {x.LogLevel}: {x.Message}")));
+        services.AddSingleton<IConfiguration>(configuration);
+        services.AddLoggingForFixtures(_logging);
 
         ConfigureServices(services);
 
@@ -57,27 +56,17 @@ public class ContosoUniversityFixture : IDisposable
         return this;
     }
 
-    private static string GetConnectionString()
-    {
-        IConfigurationRoot configuration = new ConfigurationBuilder()
-            .AddUserSecrets<ContosoUniversityFixture>(optional: true)
-            .AddEnvironmentVariables()
-            .Build();
-
-        var connectionString = configuration.GetConnectionString("ContosoUniversity")
-            ?? throw new InvalidOperationException("ConnectionStrings:ContosoUniversity is required.");
-
-        return connectionString;
-    }
-
     private static void ConfigureServices(ServiceCollection services)
     {
-        if (!Enabled)
+        if (!DatabaseEnvironment.IsAvailable)
         {
             return;
         }
 
-        var connectionString = GetConnectionString();
+        var provider = services.BuildServiceProvider();
+        var configuration = provider.GetRequiredService<IConfiguration>();
+
+        var connectionString = configuration.GetRequiredConnectionString("ContosoUniversity");
         services.AddDbContext<SchoolContext, NpgsqlSchoolContext>(builder
             => builder.UseNpgsql(connectionString)
         );
@@ -87,7 +76,7 @@ public class ContosoUniversityFixture : IDisposable
 
     private void InitializeDatabase()
     {
-        if (!Enabled)
+        if (!DatabaseEnvironment.IsAvailable)
         {
             return;
         }

@@ -14,7 +14,9 @@ public class UniversalDateTimeTypeHandler : SqlMapper.TypeHandler<DateTime>
     public override DateTime Parse(object value)
     {
         // Parse the database value and specify its kind as UTC
-        return DateTime.SpecifyKind((DateTime)value, DateTimeKind.Utc).ToLocalTime();
+        return value is DateTime @datetimeValue
+            ? DateTime.SpecifyKind(@datetimeValue, DateTimeKind.Utc).ToLocalTime()
+            : throw new NotSupportedException($"{value.GetType().Name} is not supported.");
     }
 
     public static void Initialize()

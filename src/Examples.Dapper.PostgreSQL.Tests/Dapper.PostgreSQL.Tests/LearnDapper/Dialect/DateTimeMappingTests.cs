@@ -1,5 +1,6 @@
 using System.Data.Common;
 using Dapper;
+using Examples.Dapper.PostgreSQL.Data.Handlers;
 using Examples.Dapper.PostgreSQL.LearnDapper;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,36 +17,65 @@ public class DateTimeMappingTests(
             .UseLogger(output.WriteLine)
             .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.LearnDapper);
 
+    private record class DateTimeMapping<T>(T Value, string? DbTypeName);
 
     [Theory(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
     [MemberData(nameof(DateTimeKindSpecifiedData))]
-    public async Task VerifyThatMapping_WhenDateTimeKindSpecified(DateTime date, string expectedType, DateTimeKind expectedKind)
+    public async Task VerifyDateTimeMapping_WhenDateTimeKindSpecified(DateTime value, DateTimeKind expectedKind, string expectedDbType)
     {
         using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
-        using var transaction = await connection.BeginTransactionAsync(TestContext.Current.CancellationToken);
 
-        var sql = """
-            SELECT 
-                @date AS date_original,
-                CAST(pg_typeof(@date) as TEXT) AS date_type,
-                CAST(pg_typeof(CURRENT_TIMESTAMP) as TEXT) AS CURRENT_TIMESTAMP_TYPE
-            """;
-
-        var actual = await connection.QuerySingleAsync(
+        var actual = await connection.QuerySingleAsync<DateTimeMapping<DateTime>>(
             new CommandDefinition(
-                sql,
-                new { date },
+                "SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name",
+                new { value },
                 cancellationToken: TestContext.Current.CancellationToken));
 
-        Assert.Equal(expectedType, actual.date_type);
-        Assert.Equal(expectedKind, actual.date_original.Kind);
+        Assert.Equal(value, actual.Value);
+        Assert.Equal(expectedKind, actual.Value.Kind);
+        Assert.Equal(expectedDbType, actual.DbTypeName);
     }
 
-    public static TheoryData<DateTime, string, DateTimeKind> DateTimeKindSpecifiedData => [
-        (DateTime.Parse("2025-11-01T12:34:56"), "timestamp without time zone", DateTimeKind.Unspecified),
-        (DateTime.Parse("2025-11-01T12:34:56+09:00").ToLocalTime(), "timestamp without time zone", DateTimeKind.Unspecified),
-        (DateTime.Parse("2025-11-01T12:34:56Z").ToUniversalTime(), "timestamp with time zone", DateTimeKind.Utc),
+    public static TheoryData<DateTime, DateTimeKind, string> DateTimeKindSpecifiedData => [
+        (DateTime.Parse("2025-11-01T12:34:56"), DateTimeKind.Unspecified, "timestamp without time zone"),
+        (DateTime.Parse("2025-11-01T12:34:56+09:00").ToLocalTime(), DateTimeKind.Unspecified, "timestamp without time zone"),
+        (DateTime.Parse("2025-11-01T12:34:56Z").ToUniversalTime(), DateTimeKind.Utc, "timestamp with time zone"),
     ];
 
+    [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
+    public async Task VerifyDateOnlyMapping_UseDateOnlyTypeHandler()
+    {
+        using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
+        var value = DateOnly.Parse("2025-11-01");
+
+        DateOnlyTypeHandler.Initialize();
+
+        var actual = await connection.QuerySingleAsync<DateTimeMapping<DateOnly>>(
+            new CommandDefinition(
+                "SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name",
+                new { value },
+                cancellationToken: TestContext.Current.CancellationToken));
+
+        Assert.Equal(value, actual.Value);
+        Assert.Equal("date", actual.DbTypeName);
+    }
+
+    [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
+    public async Task VerifyDateTimeOffsetMapping_UseDateTimeOffsetTypeHandler()
+    {
+        using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
+        var value = DateTimeOffset.Parse("2025-11-01T12:34:56+09:00");
+
+        DateTimeOffsetTypeHandler.Initialize();
+
+        var actual = await connection.QuerySingleAsync<DateTimeMapping<DateTimeOffset>>(
+            new CommandDefinition(
+                "SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name",
+                new { value },
+                cancellationToken: TestContext.Current.CancellationToken));
+
+        Assert.Equal(value, actual.Value);
+        Assert.Equal("timestamp with time zone", actual.DbTypeName);
+    }
 
 }

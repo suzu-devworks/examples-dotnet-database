@@ -1,6 +1,6 @@
 using System.Data.Common;
 using Dapper;
-using Examples.Dapper.PostgreSQL.Data;
+using Examples.Dapper.Data;
 using Examples.Dapper.PostgreSQL.LearnDapper;
 using Examples.Dapper.PostgreSQL.LearnDapper.Models;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,7 +1,7 @@
 using System.Data;
 using Npgsql;
 
-namespace Examples.Dapper.PostgreSQL.Data;
+namespace Examples.Dapper.PostgreSQL;
 
 public class NpgsqlConnectionFactory(string connectionString)
 #pragma warning disable CS0618

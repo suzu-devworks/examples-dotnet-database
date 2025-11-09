@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace Examples.Dapper.PostgreSQL.Data;
+namespace Examples.Dapper;
 
 [Obsolete("Unless there's a specific reason not to, please use System.Data.Common.DbDataSource.")]
 public interface IDbConnectionFactory

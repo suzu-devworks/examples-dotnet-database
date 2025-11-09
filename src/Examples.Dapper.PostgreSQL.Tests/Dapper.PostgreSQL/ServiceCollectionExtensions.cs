@@ -1,4 +1,3 @@
-using Examples.Dapper.PostgreSQL.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Npgsql;
@@ -14,12 +13,13 @@ public static class ServiceCollectionExtensions
     {
         global::Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
-        var builder = new DbConnectionFactoryOptionsBuilder();
+        var optionsBuilder = new DbConnectionFactoryOptionsBuilder();
 
-        optionsAction?.Invoke(builder);
+        optionsAction?.Invoke(optionsBuilder);
 
-        var connectionString = builder.ConnectionString
+        var connectionString = optionsBuilder.ConnectionString
             ?? throw new InvalidOperationException("ConnectionString is not set.");
+        var connectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString);
 
         // .NET 6.0+
 
@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
         services.AddKeyedSingleton<NpgsqlDataSource>(
             serviceKey,
             (provider, key) =>
-                new NpgsqlDataSourceBuilder(connectionString)
+                new NpgsqlDataSourceBuilder(connectionStringBuilder.ConnectionString)
                     .UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>())
                     .Build());
 

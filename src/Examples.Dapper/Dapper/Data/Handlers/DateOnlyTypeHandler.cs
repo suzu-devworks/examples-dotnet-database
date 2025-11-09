@@ -1,7 +1,7 @@
 using System.Data;
 using Dapper;
 
-namespace Examples.Dapper.PostgreSQL.Data.Handlers;
+namespace Examples.Dapper.Data.Handlers;
 
 public class DateOnlyTypeHandler(DbType dbType = DbType.Date)
  : SqlMapper.TypeHandler<DateOnly>

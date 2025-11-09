@@ -90,6 +90,7 @@ dotnet add package Sqlify.Dapper
 
 dotnet add reference ../Examples.Various/
 dotnet add reference ../ContosoUniversity/
+dotnet add reference ../Examples.Dapper/
 
 dotnet user-secrets init
 cd ../../

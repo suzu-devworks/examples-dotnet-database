@@ -6,11 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Examples</RootNamespace>
     <OutputType>Exe</OutputType>
-    <UserSecretsId>d55f517c-0885-4e68-b690-8747fecefdab</UserSecretsId>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- <DefineConstants>USE_FACTORY</DefineConstants> -->
+    <UserSecretsId>5beb3690-9258-47fc-b769-ad1f4245fdbd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,16 +23,13 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Dapper" Version="2.1.66" />
-    <PackageReference Include="Dapper.SqlBuilder" Version="2.1.66" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
-    <PackageReference Include="Npgsql" Version="9.0.4" />
-    <PackageReference Include="Sqlify" Version="0.3.14" />
-    <PackageReference Include="Sqlify.Dapper" Version="0.3.5" />
-    <PackageReference Include="xunit.v3" Version="3.1.0" />
+    <PackageReference Include="xunit.v3" Version="3.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

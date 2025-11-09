@@ -1,27 +1,27 @@
+using System.Data.Common;
 using ContosoUniversity.Abstraction;
 using ContosoUniversity.Models;
 using Dapper;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-#pragma warning disable CS0618
+namespace Examples.Dapper.SqlServer.ContosoUniversity.Repositories;
 
-namespace Examples.Dapper.PostgreSQL.ContosoUniversity.Repositories;
-
-public class StudentFactoryRepository(
-    IDbConnectionFactory dbConnectionFactory,
-    ILogger<StudentFactoryRepository> logger)
+public class StudentRepository(
+    [FromKeyedServices(DataSourceKeys.ContosoUniversity)] DbDataSource dataSource,
+    ILogger<StudentRepository> logger)
     : IStudentRepository
 {
-    private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
-    private readonly ILogger<StudentFactoryRepository> _logger = logger;
+    private readonly DbDataSource _dbDataSource = dataSource;
+    private readonly ILogger<StudentRepository> _logger = logger;
 
     public async Task<IEnumerable<Student>> FindAllAsync(CancellationToken cancelToken = default)
     {
-        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var query = """
-            SELECT id, last_name, first_mid_name, enrollment_date
-            FROM "user".students;
+            SELECT ID, LastName, FirstMidName, EnrollmentDate
+            FROM "user".Students;
             """;
         var students = await connection.QueryAsync<Student>(
               new CommandDefinition(query,
@@ -34,13 +34,14 @@ public class StudentFactoryRepository(
 
     public async Task<Student?> FindAsync(int id, CancellationToken cancelToken = default)
     {
-        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var query = """
-            SELECT id, last_name, first_mid_name, enrollment_date
-            FROM "user".students
-            WHERE id = @id;
+            SELECT ID, LastName, FirstMidName, EnrollmentDate
+            FROM "user".Students
+            WHERE ID = @id;
             """;
+
         var student = await connection.QuerySingleOrDefaultAsync<Student>(
             new CommandDefinition(query,
                 parameters: new { id },
@@ -61,13 +62,13 @@ public class StudentFactoryRepository(
 
     public async Task AddAsync(Student student, CancellationToken cancelToken = default)
     {
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+
         var query = """
-            INSERT INTO "user".students (id, last_name, first_mid_name, enrollment_date)
+            SET IDENTITY_INSERT "user".Students ON;
+            INSERT INTO "user".Students (ID, LastName, FirstMidName, EnrollmentDate)
             VALUES (@ID, @LastName, @FirstMidName, @EnrollmentDate);
             """;
-
-        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
-
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
                 parameters: student,
@@ -83,12 +84,12 @@ public class StudentFactoryRepository(
             throw new InvalidOperationException($"Invalid Student: id=\"{id}\".");
         }
 
-        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var query = """
-            UPDATE "user".students
-            SET last_name = @LastName, first_mid_name = @FirstMidName,  enrollment_date
-            WHERE id = @ID;
+            UPDATE "user".Students
+            SET LastName = @LastName, FirstMidName = @FirstMidName
+            WHERE ID = @ID;
             """;
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
@@ -100,11 +101,11 @@ public class StudentFactoryRepository(
 
     public async Task RemoveAsync(int id, CancellationToken cancelToken = default)
     {
-        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
 
         var query = """
-            DELETE FROM user.students
-            WHERE id = @ID
+            DELETE FROM user.Students
+            WHERE ID = @ID
             """;
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,

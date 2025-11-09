@@ -1,7 +1,7 @@
 using System.Dynamic;
 using System.Reflection;
 
-namespace Examples.Dapper.PostgreSQL.Data;
+namespace Examples.Dapper.Data;
 
 /// <summary>
 /// Extension methods for Bulk Insert Helper.

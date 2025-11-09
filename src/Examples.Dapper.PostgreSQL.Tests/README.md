@@ -3,6 +3,7 @@
 ## Table of Contents <!-- omit in toc -->
 
 - [Dapper Overview](#dapper-overview)
+- [Connection String](#connection-string)
 - [Dapper Bulk Insert](#dapper-bulk-insert)
 - [Dapper Type Handler](#dapper-type-handler)
 - [SqlBuilder](#sqlbuilder)
@@ -17,6 +18,10 @@
 Dapper is a simple micro-ORM used to simplify development using ADO.NET.
 
 What it does is simplify various aspects of ADO.NET by providing extension methods to `DbConnection`.
+
+## Connection String
+
+- [Connection String Parameters | Npgsql Documentation](https://www.npgsql.org/doc/connection-string-parameters.html)
 
 ## Dapper Bulk Insert
 

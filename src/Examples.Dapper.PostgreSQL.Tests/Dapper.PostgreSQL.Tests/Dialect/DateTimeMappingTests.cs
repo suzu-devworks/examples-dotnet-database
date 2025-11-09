@@ -1,21 +1,20 @@
 using System.Data.Common;
 using Dapper;
 using Examples.Dapper.Data.Handlers;
-using Examples.Dapper.PostgreSQL.LearnDapper;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.Dapper.PostgreSQL.Tests.LearnDapper.Dialect;
+namespace Examples.Dapper.PostgreSQL.Tests.Dialect;
 
 public class DateTimeMappingTests(
-    LearnDapperFixtures fixture,
+    DialectFixtures fixture,
     ITestOutputHelper output)
-    : IClassFixture<LearnDapperFixtures>
+    : IClassFixture<DialectFixtures>
 {
     public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
     private readonly DbDataSource _dataSource = fixture
             .UseLogger(output.WriteLine)
-            .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.LearnDapper);
+            .ServiceProvider.GetRequiredService<DbDataSource>();
 
     private record class DateTimeMapping<T>(T Value, string? DbTypeName);
 
@@ -26,8 +25,9 @@ public class DateTimeMappingTests(
         using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
 
         var actual = await connection.QuerySingleAsync<DateTimeMapping<DateTime>>(
-            new CommandDefinition(
-                "SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name",
+            new CommandDefinition("""
+                SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name;
+                """,
                 new { value },
                 cancellationToken: TestContext.Current.CancellationToken));
 
@@ -51,8 +51,9 @@ public class DateTimeMappingTests(
         DateOnlyTypeHandler.Initialize();
 
         var actual = await connection.QuerySingleAsync<DateTimeMapping<DateOnly>>(
-            new CommandDefinition(
-                "SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name",
+            new CommandDefinition("""
+                SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name;
+                """,
                 new { value },
                 cancellationToken: TestContext.Current.CancellationToken));
 
@@ -69,8 +70,9 @@ public class DateTimeMappingTests(
         DateTimeOffsetTypeHandler.Initialize();
 
         var actual = await connection.QuerySingleAsync<DateTimeMapping<DateTimeOffset>>(
-            new CommandDefinition(
-                "SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name",
+            new CommandDefinition("""
+                SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name;
+                """,
                 new { value },
                 cancellationToken: TestContext.Current.CancellationToken));
 

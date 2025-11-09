@@ -2,8 +2,13 @@
 
 ## Table of Contents <!-- omit in toc -->
 
+- [Connection String](#connection-string)
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
+
+## Connection String
+
+- [SqlConnection.ConnectionString Property (Microsoft.Data.SqlClient) | Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring)
 
 ## Development
 

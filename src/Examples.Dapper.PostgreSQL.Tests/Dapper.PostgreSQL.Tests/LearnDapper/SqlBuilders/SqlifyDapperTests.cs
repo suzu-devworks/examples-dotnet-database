@@ -48,7 +48,7 @@ public class SqlifyDapperTests(
         var tab = Sql.Table<IProductTable>("tab");
 
         var query = Sql
-            .Select(tab.CategoryId, tab.ProductName, tab.UnitPrice)
+            .Select(tab.ProductId, tab.CategoryId, tab.ProductName, tab.UnitPrice)
             .From(tab)
             .Where(tab.CategoryId == 5, tab.Discontinued == false)
             .OrderByDesc(tab.UnitPrice)

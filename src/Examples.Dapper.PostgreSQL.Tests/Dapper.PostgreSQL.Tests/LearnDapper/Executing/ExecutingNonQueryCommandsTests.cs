@@ -21,7 +21,7 @@ public class ExecutingNonQueryCommandsTests(
     public async Task WhenInsert()
     {
         using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
-        await connection.BeginTransactionAsync(TestContext.Current.CancellationToken);
+        using var transaction = await connection.BeginTransactionAsync(TestContext.Current.CancellationToken);
 
         var product = new Product
         {
@@ -60,7 +60,7 @@ public class ExecutingNonQueryCommandsTests(
     public async Task WhenUpdate()
     {
         using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
-        await connection.BeginTransactionAsync(TestContext.Current.CancellationToken);
+        using var transaction = await connection.BeginTransactionAsync(TestContext.Current.CancellationToken);
 
         var sql1 = """
             UPDATE products SET name = name || @suffix
@@ -92,7 +92,7 @@ public class ExecutingNonQueryCommandsTests(
     public async Task WhenDelete()
     {
         using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
-        await connection.BeginTransactionAsync(TestContext.Current.CancellationToken);
+        using var transaction = await connection.BeginTransactionAsync(TestContext.Current.CancellationToken);
 
         var sql1 = """
             DELETE FROM products WHERE category_id = @categoryID

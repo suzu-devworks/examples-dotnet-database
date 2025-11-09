@@ -4,8 +4,11 @@
   "dictionaryDefinitions": [],
   "dictionaries": [],
   "words": [
+    "Expando",
     "Noda",
-    "Npgsql"
+    "Npgsql",
+    "oakio",
+    "Sqlify"
   ],
   "ignoreWords": [],
   "import": [

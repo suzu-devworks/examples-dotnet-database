@@ -17,16 +17,14 @@ public class StudentRepository(
 
     public async Task<IEnumerable<Student>> FindAllAsync(CancellationToken cancelToken = default)
     {
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+
         var query = """
             SELECT id, last_name, first_mid_name, enrollment_date
             FROM "user".students;
             """;
-
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
-
         var students = await connection.QueryAsync<Student>(
               new CommandDefinition(query,
-                commandTimeout: 100,
                 cancellationToken: cancelToken));
 
         _logger?.LogDebug("Students is founds: count=\"{count}\".", students.Count());
@@ -36,18 +34,16 @@ public class StudentRepository(
 
     public async Task<Student?> FindAsync(int id, CancellationToken cancelToken = default)
     {
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+
         var query = """
             SELECT id, last_name, first_mid_name, enrollment_date
             FROM "user".students
             WHERE id = @id;
             """;
-
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
-
         var student = await connection.QuerySingleOrDefaultAsync<Student>(
             new CommandDefinition(query,
                 parameters: new { id },
-                commandTimeout: 100,
                 cancellationToken: cancelToken)
         );
 
@@ -65,13 +61,12 @@ public class StudentRepository(
 
     public async Task AddAsync(Student student, CancellationToken cancelToken = default)
     {
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+
         var query = """
             INSERT INTO "user".students (id, last_name, first_mid_name, enrollment_date)
             VALUES (@ID, @LastName, @FirstMidName, @EnrollmentDate);
             """;
-
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
-
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
                 parameters: student,
@@ -87,18 +82,16 @@ public class StudentRepository(
             throw new InvalidOperationException($"Invalid Student: id=\"{id}\".");
         }
 
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+
         var query = """
             UPDATE "user".students
             SET last_name = @LastName, first_mid_name = @FirstMidName,  enrollment_date
             WHERE id = @ID;
             """;
-
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
-
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
                 parameters: modifier,
-                commandTimeout: 100,
                 cancellationToken: cancelToken));
 
         _logger.LogDebug("UPDATE was successful. {effectiveRows} results.", effectiveRows);
@@ -106,17 +99,15 @@ public class StudentRepository(
 
     public async Task RemoveAsync(int id, CancellationToken cancelToken = default)
     {
+        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+
         var query = """
             DELETE FROM user.students
             WHERE id = @ID
             """;
-
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
-
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
                 parameters: new { id },
-                commandTimeout: 100,
                 cancellationToken: cancelToken));
 
         _logger.LogDebug("DELETE was successful. {effectiveRows} results.", effectiveRows);

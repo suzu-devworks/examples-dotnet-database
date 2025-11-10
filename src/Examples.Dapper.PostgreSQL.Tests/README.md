@@ -8,7 +8,8 @@
 - [Dapper Type Handler](#dapper-type-handler)
 - [SqlBuilder](#sqlbuilder)
   - [`Dapper.SqlBuilder`](#dappersqlbuilder)
-  - [Sqlify.Dapper](#sqlifydapper)
+  - [`Sqlify.Dapper`](#sqlifydapper)
+  - [`DapperExtensions`](#dapperextensions)
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
@@ -57,13 +58,22 @@ It would be convenient if we could specify settings on a session-by-session basi
 
 There aren't many lines of code, so it would be best to read the code itself.
 
+It's just that simple.
+
 - [Dapper/Dapper.SqlBuilder at main · DapperLib/Dapper](https://github.com/DapperLib/Dapper/tree/main/Dapper.SqlBuilder)
 
-### Sqlify.Dapper
+### `Sqlify.Dapper`
 
-Fluent SQL builder for Dapper library.
+It's really good, but creating the interface seems like it's going to involve a lot of boilerplate code, so we need to figure out a way to avoid that.
 
 - [oakio/Sqlify.Dapper: Fluent SQL builder for Dapper](https://github.com/oakio/sqlify.dapper)
+
+### `DapperExtensions`
+
+It's quite good, but the lack of instructions made it difficult to use, and I'm also skeptical about whether it will be updated in the future.
+
+- [tmsmith/Dapper-Extensions]...(<https://github.com/tmsmith/Dapper-Extensions>)
+<!-- spell-checker: words tmsmith -->
 
 ## Development
 
@@ -92,6 +102,7 @@ dotnet add package Dapper
 dotnet add package Npgsql
 dotnet add package Dapper.SqlBuilder
 dotnet add package Sqlify.Dapper
+dotnet add package DapperExtensions
 
 dotnet add reference ../Examples.Various/
 dotnet add reference ../ContosoUniversity/

@@ -18,7 +18,7 @@ public class DapperSqlBuilderTests(
             .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.LearnDapper);
 
     [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
-    public async Task WhenManyToOneRelationships()
+    public async Task WhenSelectQuery()
     {
         using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
 

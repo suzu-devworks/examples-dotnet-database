@@ -10,6 +10,7 @@
     "dev"
   ],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "postAttachCommand": "/bin/sh ./.devcontainer/postAttachCommand.sh",
   "remoteUser": "vscode",
   "customizations": {
     "vscode": {

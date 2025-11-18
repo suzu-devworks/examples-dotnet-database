@@ -423,3 +423,12 @@ FodyWeavers.xsd
 .mono/
 .DS_Store
 .password.txt
+
+## SQLite
+*.db
+*.sqlite
+!*.sqlite/
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm

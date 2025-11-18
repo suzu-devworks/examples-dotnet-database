@@ -14,7 +14,10 @@
   ],
   "dictionaryDefinitions": [],
   "dictionaries": [],
-  "words": [],
+  "words": [
+    "Contoso",
+    "xunit"
+  ],
   "ignoreWords": [],
   "import": []
 }

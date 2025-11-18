@@ -1,0 +1,20 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    ".git",
+    ".devcontainer",
+    ".config",
+    ".github",
+    ".vscode",
+    ".editorconfig",
+    ".gitattributes",
+    ".gitignore",
+    "*.csproj",
+    "*.sln"
+  ],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [],
+  "ignoreWords": [],
+  "import": []
+}

@@ -422,7 +422,7 @@ FodyWeavers.xsd
 [Tt]emp/
 .mono/
 .DS_Store
-.password.txt
+.db_password.txt
 
 ## SQLite
 *.db

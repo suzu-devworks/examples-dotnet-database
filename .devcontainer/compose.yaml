@@ -1,0 +1,36 @@
+services:
+  mssql:
+    # https://mcr.microsoft.com/artifact/mar/mssql/server/about
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      interconnect:
+        aliases:
+          - sqlserver
+    ports:
+      - 1433:1433
+    restart: no
+    secrets:
+      - db_password
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD_FILE=/run/secrets/db_password
+      - MSSQL_PID=Express
+      - MSSQL_LCID=1041
+      - MSSQL_COLLATION=Japanese_CI_AS
+      - TZ="Asia/Tokyo"
+    volumes:
+      - mssql-data:/var/opt/mssql
+      # use custom initdb.d with MSSQL_SA_PASSWORD_FILE.
+      - ./mssql/run_custom_setup.sh:/opt/mssql/bin/run_custom_setup.sh
+      - ./mssql/initdb.d:/mssql-server-setup-scripts.d
+
+secrets:
+   db_password:
+     file: ../.db_password.txt
+
+volumes:
+  mssql-data:
+
+networks:
+  interconnect:
+    driver: bridge

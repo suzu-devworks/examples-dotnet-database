@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity", "src\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.EntityFrameworkCore.SQLite.Tests", "src\Examples.EntityFrameworkCore.SQLite.Tests\Examples.EntityFrameworkCore.SQLite.Tests.csproj", "{78F07345-CACD-40DE-A429-C76D49447F59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.EntityFrameworkCore.SqlServer.Tests", "src\Examples.EntityFrameworkCore.SqlServer.Tests\Examples.EntityFrameworkCore.SqlServer.Tests.csproj", "{201442EC-19C7-495C-8E5F-617877CC4DBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,18 @@ Global
 		{78F07345-CACD-40DE-A429-C76D49447F59}.Release|x64.Build.0 = Release|Any CPU
 		{78F07345-CACD-40DE-A429-C76D49447F59}.Release|x86.ActiveCfg = Release|Any CPU
 		{78F07345-CACD-40DE-A429-C76D49447F59}.Release|x86.Build.0 = Release|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Debug|x64.Build.0 = Debug|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Debug|x86.Build.0 = Debug|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Release|x64.ActiveCfg = Release|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Release|x64.Build.0 = Release|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Release|x86.ActiveCfg = Release|Any CPU
+		{201442EC-19C7-495C-8E5F-617877CC4DBB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +109,6 @@ Global
 		{5232D9D8-3536-4AA8-93D4-823D81B7C30B} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{1921C367-3C03-42AB-BD9C-0E99AB65BE66} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{78F07345-CACD-40DE-A429-C76D49447F59} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{201442EC-19C7-495C-8E5F-617877CC4DBB} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal

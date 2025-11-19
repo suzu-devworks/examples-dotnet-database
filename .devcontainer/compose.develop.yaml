@@ -5,7 +5,7 @@ services:
       - interconnect
     tty: true
     secrets:
-      - password
+      - db_password
     environment:
       TZ: "Asia/Tokyo"
     volumes:
@@ -15,8 +15,8 @@ services:
       - ../../:/workspaces:cached
 
 secrets:
-   password:
-     file: ../.password.txt
+   db_password:
+     file: ../.db_password.txt
 
 networks:
   interconnect:

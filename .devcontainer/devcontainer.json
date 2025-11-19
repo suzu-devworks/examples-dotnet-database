@@ -12,6 +12,10 @@
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "postAttachCommand": "/bin/sh ./.devcontainer/postAttachCommand.sh",
   "remoteUser": "vscode",
+  "remoteEnv": {
+    "MSSQL_SERVICE": "",
+    "POSTGRES_SERVICE": ""
+  },
   "customizations": {
     "vscode": {
       "extensions": [

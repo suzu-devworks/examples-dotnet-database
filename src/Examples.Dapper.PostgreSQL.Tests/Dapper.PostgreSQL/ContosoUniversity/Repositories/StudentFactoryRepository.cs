@@ -1,23 +1,24 @@
-using System.Data.Common;
 using ContosoUniversity.Abstraction;
 using ContosoUniversity.Models;
 using Dapper;
-using Microsoft.Extensions.DependencyInjection;
+using Examples.Dapper.Data;
 using Microsoft.Extensions.Logging;
 
 namespace Examples.Dapper.PostgreSQL.ContosoUniversity.Repositories;
 
-public class StudentRepository(
-    [FromKeyedServices(DataSourceKeys.ContosoUniversity)] DbDataSource dataSource,
-    ILogger<StudentRepository> logger)
+#pragma warning disable CS0618 // is obsolete
+
+public class StudentFactoryRepository(
+    IDbConnectionFactory dbConnectionFactory,
+    ILogger<StudentFactoryRepository> logger)
     : IStudentRepository
 {
-    private readonly DbDataSource _dbDataSource = dataSource;
-    private readonly ILogger<StudentRepository> _logger = logger;
+    private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
+    private readonly ILogger<StudentFactoryRepository> _logger = logger;
 
     public async Task<IEnumerable<Student>> FindAllAsync(CancellationToken cancelToken = default)
     {
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
 
         var query = """
             SELECT id, last_name, first_mid_name, enrollment_date
@@ -34,7 +35,7 @@ public class StudentRepository(
 
     public async Task<Student?> FindAsync(int id, CancellationToken cancelToken = default)
     {
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
 
         var query = """
             SELECT id, last_name, first_mid_name, enrollment_date
@@ -61,12 +62,13 @@ public class StudentRepository(
 
     public async Task AddAsync(Student student, CancellationToken cancelToken = default)
     {
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
-
         var query = """
             INSERT INTO "user".students (id, last_name, first_mid_name, enrollment_date)
             VALUES (@ID, @LastName, @FirstMidName, @EnrollmentDate);
             """;
+
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
+
         var effectiveRows = await connection.ExecuteAsync(
             new CommandDefinition(query,
                 parameters: student,
@@ -82,7 +84,7 @@ public class StudentRepository(
             throw new InvalidOperationException($"Invalid Student: id=\"{id}\".");
         }
 
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
 
         var query = """
             UPDATE "user".students
@@ -99,7 +101,7 @@ public class StudentRepository(
 
     public async Task RemoveAsync(int id, CancellationToken cancelToken = default)
     {
-        using var connection = await _dbDataSource.OpenConnectionAsync(cancelToken);
+        using var connection = await _dbConnectionFactory.CreateConnectionAsync(cancelToken);
 
         var query = """
             DELETE FROM user.students

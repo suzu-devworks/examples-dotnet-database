@@ -4,6 +4,8 @@ using Npgsql;
 
 namespace Examples.Dapper.PostgreSQL;
 
+#pragma warning disable CS0618 // is obsolete
+
 public class NpgsqlConnectionFactory(string connectionString)
     : IDbConnectionFactory
 {

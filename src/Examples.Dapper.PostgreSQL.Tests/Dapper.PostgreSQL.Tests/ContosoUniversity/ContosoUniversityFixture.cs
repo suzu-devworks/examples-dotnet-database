@@ -1,7 +1,9 @@
 using ContosoUniversity.Abstraction;
+using Examples.Dapper.PostgreSQL.ContosoUniversity;
 using Examples.Dapper.PostgreSQL.ContosoUniversity.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Examples.Dapper.PostgreSQL.Tests.ContosoUniversity;
 
@@ -61,13 +63,27 @@ public class ContosoUniversityFixture : IDisposable
 
         var provider = services.BuildServiceProvider();
         var configuration = provider.GetRequiredService<IConfiguration>();
+        var logger = provider.GetRequiredService<ILogger<ContosoUniversityFixture>>();
 
         var connectionString = configuration.GetConnectionString("ContosoUniversity")
             ?? throw new InvalidOperationException("ConnectionStrings:ContosoUniversity is required.");
 
         services.AddDbConnectionFactory(builder => builder.UseNpgsql(connectionString));
 
+#if USE_FACTORY
+        services.AddDbConnectionFactory(builder => builder.UseNpgsql(connectionString));
+
+        services.AddScoped<IStudentRepository, StudentFactoryRepository>();
+        logger.LogInformation("Use Factory.");
+#else
+        services.AddKeyedDbDataSource(
+            DataSourceKeys.ContosoUniversity,
+            builder => builder.UseNpgsql(connectionString));
+
         services.AddScoped<IStudentRepository, StudentRepository>();
+        logger.LogInformation("Use DataSource.");
+#endif
+
     }
 
     private static void InitializeDatabase()

@@ -27,7 +27,8 @@ This repository uses multiple DevContainers configurations to switch between dif
 
 As of now, it is as follows:
 
-- [default](./.devcontainer/): EntityFrameworkCore.InMemory database and SQLite
+- [*default*](./.devcontainer/): EntityFrameworkCore.InMemory database and SQLite
 - [`mssql`](./.devcontainer/mssql/): SQL server 2022 express edition
+- [`pgsql`](./.devcontainer/pgsql/): PostgreSQL 18
 
 To switch between containers, please use the `Dev Containers: Switch Container` command from the Command Palette (F1).

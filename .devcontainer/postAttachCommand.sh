@@ -13,3 +13,10 @@ dotnet user-secrets --project src/Examples.EntityFrameworkCore.SqlServer.Tests \
     set ConnectionStrings:ContosoUniversity "Data Source=${MSSQL_SERVICE};Initial Catalog=ContosoUniversity;User ID=sa;Password=${password};Persist Security Info=False;TrustServerCertificate=yes"
 dotnet user-secrets --project src/Examples.EntityFrameworkCore.SqlServer.Tests list
 fi
+
+if [ -n "$POSTGRES_SERVICE" ]; then
+echo "SERVICE:" $POSTGRES_SERVICE
+dotnet user-secrets --project src/Examples.EntityFrameworkCore.PostgreSQL.Tests \
+    set ConnectionStrings:ContosoUniversity "Host=${POSTGRES_SERVICE};Database=contoso_university;Username=postgres;Password=${password}"
+dotnet user-secrets --project src/Examples.EntityFrameworkCore.PostgreSQL.Tests list
+fi

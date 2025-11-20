@@ -19,4 +19,8 @@ echo "SERVICE:" $POSTGRES_SERVICE
 dotnet user-secrets --project src/Examples.EntityFrameworkCore.PostgreSQL.Tests \
     set ConnectionStrings:ContosoUniversity "Host=${POSTGRES_SERVICE};Database=contoso_university;Username=postgres;Password=${password}"
 dotnet user-secrets --project src/Examples.EntityFrameworkCore.PostgreSQL.Tests list
+
+dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests \
+    set ConnectionStrings:ContosoUniversity "Host=${POSTGRES_SERVICE};Database=contoso_university;Username=postgres;Password=${password}"
+dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests list
 fi

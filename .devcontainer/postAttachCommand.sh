@@ -21,7 +21,9 @@ dotnet user-secrets --project src/Examples.EntityFrameworkCore.PostgreSQL.Tests 
 dotnet user-secrets --project src/Examples.EntityFrameworkCore.PostgreSQL.Tests list
 
 dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests \
-    set ConnectionStrings:ContosoUniversity "Host=${POSTGRES_SERVICE};Database=contoso_university;Username=postgres;Password=${password}"
+    set ConnectionStrings:Default "Host=${POSTGRES_SERVICE};Database=examples;Username=operator;Password=${password}"
+dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests \
+    set ConnectionStrings:ContosoUniversity "Host=${POSTGRES_SERVICE};Database=contoso_university;Username=operator;Password=${password}"
 dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests \
     set ConnectionStrings:ProductCatalogs "Host=${POSTGRES_SERVICE};Database=product_catalogs;Username=operator;Password=${password}"
 dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests list

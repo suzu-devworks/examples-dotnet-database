@@ -8,6 +8,7 @@
 - [Dapper Type Handler](#dapper-type-handler)
 - [SqlBuilder](#sqlbuilder)
   - [`Dapper.SqlBuilder`](#dappersqlbuilder)
+  - [`Sqlify.Dapper`](#sqlifydapper)
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
@@ -60,6 +61,14 @@ It's just that simple.
 
 - [Dapper/Dapper.SqlBuilder at main · DapperLib/Dapper](https://github.com/DapperLib/Dapper/tree/main/Dapper.SqlBuilder)
 
+### `Sqlify.Dapper`
+
+It's really good, but creating the interface seems like it's going to involve a lot of boilerplate code, so we need to figure out a way to avoid that.
+
+- [oakio/Sqlify.Dapper: Fluent SQL builder for Dapper](https://github.com/oakio/sqlify.dapper)
+
+<!-- spell-checker: words oakio -->
+
 ## Development
 
 ### How the project was initialized
@@ -83,7 +92,9 @@ dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
 dotnet add package Microsoft.Extensions.Configuration.UserSecrets
 dotnet add package Dapper
 dotnet add package Npgsql
+
 dotnet add package Dapper.SqlBuilder
+dotnet add package Sqlify.Dapper
 
 dotnet add reference ../Examples.Dapper/
 dotnet add reference ../Examples.Various/

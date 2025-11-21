@@ -3,11 +3,7 @@
   "ignorePaths": [],
   "dictionaryDefinitions": [],
   "dictionaries": [],
-  "words": [
-    "Expando",
-    "Noda",
-    "Npgsql"
-  ],
+  "words": [],
   "ignoreWords": [],
   "import": [
     "../../.vscode/cspell.json"

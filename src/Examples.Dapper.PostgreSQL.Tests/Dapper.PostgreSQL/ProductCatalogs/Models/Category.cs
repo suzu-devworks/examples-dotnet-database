@@ -1,4 +1,4 @@
-namespace Examples.Dapper.PostgreSQL.LearnDapper.Models;
+namespace Examples.Dapper.PostgreSQL.ProductCatalogs.Models;
 
 public class Category
 {

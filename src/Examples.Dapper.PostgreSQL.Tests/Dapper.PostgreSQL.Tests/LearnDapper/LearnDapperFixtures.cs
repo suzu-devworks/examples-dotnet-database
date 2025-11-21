@@ -1,4 +1,4 @@
-using Examples.Dapper.PostgreSQL.LearnDapper;
+using Examples.Dapper.PostgreSQL.ProductCatalogs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -49,7 +49,7 @@ public class LearnDapperFixtures : IDisposable
             ?? throw new InvalidOperationException("ConnectionStrings:ProductCatalogs is required.");
 
         services.AddKeyedDbDataSource(
-            DataSourceKeys.LearnDapper,
+            DataSourceKeys.ProductCatalogs,
             builder => builder.UseNpgsql(connectionString));
 
     }

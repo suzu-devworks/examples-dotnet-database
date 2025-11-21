@@ -1,8 +1,8 @@
 using System.Data.Common;
 using Dapper;
 using Examples.Dapper.PostgreSQL.Data;
-using Examples.Dapper.PostgreSQL.LearnDapper;
-using Examples.Dapper.PostgreSQL.LearnDapper.Models;
+using Examples.Dapper.PostgreSQL.ProductCatalogs;
+using Examples.Dapper.PostgreSQL.ProductCatalogs.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.Dapper.PostgreSQL.Tests.LearnDapper.Executing;
@@ -16,7 +16,7 @@ public class InsertingTests(
 
     private readonly DbDataSource _dataSource = fixture
             .UseLogger(output.WriteLine)
-            .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.LearnDapper);
+            .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.ProductCatalogs);
 
     [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
     public async Task InsertMultipleRows()

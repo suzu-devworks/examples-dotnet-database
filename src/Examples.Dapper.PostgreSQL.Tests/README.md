@@ -6,6 +6,8 @@
 - [Connection String](#connection-string)
 - [Dapper Bulk Insert](#dapper-bulk-insert)
 - [Dapper Type Handler](#dapper-type-handler)
+- [SqlBuilder](#sqlbuilder)
+  - [`Dapper.SqlBuilder`](#dappersqlbuilder)
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
@@ -48,6 +50,16 @@ Data type conversion is performed using `SqlMapper.TypeHandler<T>`, and this can
 
 It would be convenient if we could specify settings on a session-by-session basis or a column-by-column basis...
 
+## SqlBuilder
+
+### `Dapper.SqlBuilder`
+
+There aren't many lines of code, so it would be best to read the code itself.
+
+It's just that simple.
+
+- [Dapper/Dapper.SqlBuilder at main · DapperLib/Dapper](https://github.com/DapperLib/Dapper/tree/main/Dapper.SqlBuilder)
+
 ## Development
 
 ### How the project was initialized
@@ -71,6 +83,7 @@ dotnet add package Microsoft.Extensions.Configuration.EnvironmentVariables
 dotnet add package Microsoft.Extensions.Configuration.UserSecrets
 dotnet add package Dapper
 dotnet add package Npgsql
+dotnet add package Dapper.SqlBuilder
 
 dotnet add reference ../Examples.Dapper/
 dotnet add reference ../Examples.Various/

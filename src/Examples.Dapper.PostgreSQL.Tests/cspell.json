@@ -6,7 +6,8 @@
   "words": [
     "Expando",
     "Noda",
-    "Npgsql"
+    "Npgsql",
+    "Sqlify"
   ],
   "ignoreWords": [],
   "import": [

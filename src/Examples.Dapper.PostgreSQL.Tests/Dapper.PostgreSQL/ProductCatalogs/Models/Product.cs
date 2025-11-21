@@ -2,7 +2,8 @@ namespace Examples.Dapper.PostgreSQL.ProductCatalogs.Models;
 
 public class Product
 {
-    public required int ProductID { get; init; }
+    // https://github.com/tmsmith/Dapper-Extensions/issues/313
+    public required long ProductID { get; init; }
     public required string Name { get; set; }
     public string? Description { get; set; }
     public int? SupplierID { get; set; }

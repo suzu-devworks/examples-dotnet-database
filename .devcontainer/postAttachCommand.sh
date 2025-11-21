@@ -12,6 +12,12 @@ echo "SERVICE: [$MSSQL_SERVICE]"
 dotnet user-secrets --project src/Examples.EntityFrameworkCore.SqlServer.Tests \
     set ConnectionStrings:ContosoUniversity "Data Source=${MSSQL_SERVICE};Initial Catalog=ContosoUniversity;User ID=sa;Password=${password};Persist Security Info=False;TrustServerCertificate=yes"
 dotnet user-secrets --project src/Examples.EntityFrameworkCore.SqlServer.Tests list
+
+dotnet user-secrets --project src/Examples.Dapper.SqlServer.Tests \
+    set ConnectionStrings:ContosoUniversity "Data Source=${MSSQL_SERVICE};Initial Catalog=ContosoUniversity;User ID=sa;Password=${password};Persist Security Info=False;TrustServerCertificate=yes"
+dotnet user-secrets --project src/Examples.Dapper.SqlServer.Tests \
+    set ConnectionStrings:ContosoUniversity "Data Source=${MSSQL_SERVICE};Initial Catalog=ContosoUniversity;User ID=sa;Password=${password};Persist Security Info=False;TrustServerCertificate=yes"
+dotnet user-secrets --project src/Examples.Dapper.SqlServer.Tests list
 fi
 
 if [ -n "$POSTGRES_SERVICE" ]; then

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-password=$(cat $MSSQL_SA_PASSWORD_FILE)
+password=$(cat $POSTGRES_PASSWORD_FILE)
 
 psql << EOT
 SELECT version();
-CREATE USER manager WITH encrypted password '${password}' CREATEDB;
-CREATE USER operator WITH encrypted password '${password}';
+CREATE USER manager WITH PASSWORD '${password}' CREATEDB;
+CREATE USER operator WITH PASSWORD '${password}';
 \du
 EOT

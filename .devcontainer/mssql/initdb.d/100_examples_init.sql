@@ -10,6 +10,8 @@ SELECT
 FROM
     sys.databases;
 
+GO
+-- ----- 
 USE examples;
 
 /* sql-formatter-disable */

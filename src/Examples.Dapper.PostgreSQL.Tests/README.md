@@ -9,6 +9,7 @@
 - [SqlBuilder](#sqlbuilder)
   - [`Dapper.SqlBuilder`](#dappersqlbuilder)
   - [`Sqlify.Dapper`](#sqlifydapper)
+  - [`DapperExtensions`](#dapperextensions)
 - [Development](#development)
   - [How the project was initialized](#how-the-project-was-initialized)
 - [References](#references)
@@ -68,6 +69,14 @@ It's really good, but creating the interface seems like it's going to involve a 
 - [oakio/Sqlify.Dapper: Fluent SQL builder for Dapper](https://github.com/oakio/sqlify.dapper)
 
 <!-- spell-checker: words oakio -->
+
+### `DapperExtensions`
+
+It's quite good, but the lack of instructions made it difficult to use, and I'm also skeptical about whether it will be updated in the future.
+
+- [tmsmith/Dapper-Extensions]...(<https://github.com/tmsmith/Dapper-Extensions>)
+
+<!-- spell-checker: words tmsmith -->
 
 ## Development
 

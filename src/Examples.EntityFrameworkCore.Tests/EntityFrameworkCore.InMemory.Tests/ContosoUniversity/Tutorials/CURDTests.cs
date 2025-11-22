@@ -12,12 +12,18 @@ namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity.Tutorial
 /// <param name="fixture"></param>
 /// <param name="output"></param>
 /// <seealso href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/crud"/>
-public class CURDTests(
-    ContosoUniversityFixture fixture,
-    ITestOutputHelper output)
-    : IClassFixture<ContosoUniversityFixture>
+public class CURDTests(ITestOutputHelper output)
+    : IDisposable
 {
-    private readonly ContosoUniversityFixture _fixture = fixture.UseLogger(output.WriteLine);
+    private readonly ContosoUniversityFixture _fixture
+        = ContosoUniversityFixture.WithName(nameof(CURDTests))
+            .UseLogger(output.WriteLine);
+
+    public void Dispose()
+    {
+        _fixture.Dispose();
+        GC.SuppressFinalize(this);
+    }
 
     [Fact]
     public async Task When_UsedNavigationProperty_Then_ReadsEnrollments()
@@ -153,13 +159,12 @@ public class CURDTests(
         Assert.Null(student);
     }
 
-
-#pragma warning disable IDE0060 // Remove unused parameter
-
     // see: https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.controllerbase.tryupdatemodelasync?view=aspnetcore-10.0
     private static Task<bool> TryUpdateModelAsync<TModel>(TModel model,
+#pragma warning disable IDE0060 // Remove unused parameter
         string prefix,
         params Expression<Func<TModel, object?>>[] valueProvider)
+#pragma warning restore IDE0060 // Remove unused parameter
         where TModel : class
     {
         // Using TryUpdateModel to update fields with posted values 
@@ -176,8 +181,5 @@ public class CURDTests(
 
         return Task.FromResult(true);
     }
-
-#pragma warning restore IDE0060 // Remove unused parameter
-
 
 }

@@ -43,7 +43,7 @@ public class StudentRepositoryTests(
     {
         using var scoped = _fixture.ServiceProvider.CreateScope();
         var context = scoped.ServiceProvider.GetRequiredService<SchoolContext>();
-        await context.Database.BeginTransactionAsync(TestContext.Current.CancellationToken);
+        using var transaction = await context.Database.BeginTransactionAsync(TestContext.Current.CancellationToken);
 
         var repository = scoped.ServiceProvider.GetRequiredService<IStudentRepository>();
 

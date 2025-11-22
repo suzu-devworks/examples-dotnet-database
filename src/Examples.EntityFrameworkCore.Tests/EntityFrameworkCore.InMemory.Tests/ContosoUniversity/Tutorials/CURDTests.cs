@@ -9,7 +9,6 @@ namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity.Tutorial
 /// <summary>
 /// 
 /// </summary>
-/// <param name="fixture"></param>
 /// <param name="output"></param>
 /// <seealso href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/crud"/>
 public class CURDTests(ITestOutputHelper output)

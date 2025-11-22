@@ -14,7 +14,10 @@ public class ContosoUniversityFixture : IDisposable
     private readonly ServiceProvider _serviceProvider;
     private Action<string>? _logging;
 
-    public ContosoUniversityFixture()
+    public ContosoUniversityFixture() : this(null)
+    { }
+
+    private ContosoUniversityFixture(string? databaseName)
     {
         var services = new ServiceCollection();
         services.AddLoggingForFixtures(_logging);
@@ -23,7 +26,7 @@ public class ContosoUniversityFixture : IDisposable
         {
             // Since there are no transactions, the same database needs to be created every time.
             var options = new DbContextOptionsBuilder<SchoolContext>()
-                .UseInMemoryDatabase(nameof(ContosoUniversityFixture))
+                .UseInMemoryDatabase(databaseName ?? nameof(ContosoUniversityFixture))
                 .ConfigureWarnings(o => o.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
@@ -65,6 +68,11 @@ public class ContosoUniversityFixture : IDisposable
         DbInitializer.Initialize(context);
 
         context.SaveChanges();
+    }
+
+    public static ContosoUniversityFixture WithName(string databaseName)
+    {
+        return new(databaseName);
     }
 
 }

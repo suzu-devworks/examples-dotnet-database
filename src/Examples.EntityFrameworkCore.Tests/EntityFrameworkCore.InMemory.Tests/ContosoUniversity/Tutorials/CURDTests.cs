@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity.Tutorials;
 
 /// <summary>
-/// 
+/// CRUD (create, read, update, delete).
 /// </summary>
 /// <param name="output"></param>
 /// <seealso href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/crud"/>

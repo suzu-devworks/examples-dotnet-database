@@ -4,25 +4,18 @@ using ContosoUniversity.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity.Tutorials;
+namespace Examples.EntityFrameworkCore.SQLite.Tests.ContosoUniversity.Tutorials;
 
 /// <summary>
 /// CRUD (create, read, update, delete).
 /// </summary>
 /// <param name="output"></param>
 /// <seealso href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/crud"/>
-public class CURDTests(ITestOutputHelper output)
-    : IDisposable
+public class CURDTests(ContosoUniversityFixture fixture,
+    ITestOutputHelper output)
+    : IClassFixture<ContosoUniversityFixture>
 {
-    private readonly ContosoUniversityFixture _fixture
-        = ContosoUniversityFixture.WithName(nameof(CURDTests))
-            .UseLogger(output.WriteLine);
-
-    public void Dispose()
-    {
-        _fixture.Dispose();
-        GC.SuppressFinalize(this);
-    }
+    private readonly ContosoUniversityFixture _fixture = fixture.UseLogger(output.WriteLine);
 
     [Fact]
     public async Task When_UsedNavigationProperty_Then_ReadsEnrollments()

@@ -3,6 +3,7 @@ using ContosoUniversity.Data;
 using ContosoUniversity.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity;
@@ -28,7 +29,13 @@ public class ContosoUniversityFixture : IDisposable
 
     private ContosoUniversityFixture(string databaseName)
     {
+        Dictionary<string, string?> configValues = [];
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(configValues)
+            .Build();
+
         var services = new ServiceCollection();
+        services.AddSingleton<IConfiguration>(configuration);
         services.AddLoggingForFixtures(_logging);
 
         services.AddTransient(service =>

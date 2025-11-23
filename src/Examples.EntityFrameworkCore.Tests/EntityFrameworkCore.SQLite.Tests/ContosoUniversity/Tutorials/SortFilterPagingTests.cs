@@ -6,24 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity.Tutorials;
+namespace Examples.EntityFrameworkCore.SQLite.Tests.ContosoUniversity.Tutorials;
 
 /// <summary>
 /// Sort, Filter, Paging.
 /// </summary>
 /// <seealso href="https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/sort-filter-page"/>
-public class SortFilterPagingTests(ITestOutputHelper output)
-    : IDisposable
+public class SortFilterPagingTests(ContosoUniversityFixture fixture,
+    ITestOutputHelper output)
+    : IClassFixture<ContosoUniversityFixture>
 {
-    private readonly ContosoUniversityFixture _fixture
-        = ContosoUniversityFixture.WithName(nameof(CURDTests))
-            .UseLogger(output.WriteLine);
-
-    public void Dispose()
-    {
-        _fixture.Dispose();
-        GC.SuppressFinalize(this);
-    }
+    private readonly ContosoUniversityFixture _fixture = fixture.UseLogger(output.WriteLine);
 
     [Theory]
     [InlineData(null, "Alexander", "2019-09-01")]

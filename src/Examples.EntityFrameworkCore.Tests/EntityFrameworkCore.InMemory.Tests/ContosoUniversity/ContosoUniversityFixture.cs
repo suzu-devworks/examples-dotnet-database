@@ -14,10 +14,19 @@ public class ContosoUniversityFixture : IDisposable
     private readonly ServiceProvider _serviceProvider;
     private Action<string>? _logging;
 
-    public ContosoUniversityFixture() : this(null)
-    { }
+    public ContosoUniversityFixture() : this(nameof(ContosoUniversityFixture))
+    {
+        // The scope of an In Memory database is determined by the database Name and transactions do not work, 
+        // so sharing it complicates testing.
+    }
 
-    private ContosoUniversityFixture(string? databaseName)
+    public static ContosoUniversityFixture WithName(string databaseName)
+    {
+        // We'll create a factory method to leave dependency injection in Xunit as an option.
+        return new(databaseName);
+    }
+
+    private ContosoUniversityFixture(string databaseName)
     {
         var services = new ServiceCollection();
         services.AddLoggingForFixtures(_logging);
@@ -26,7 +35,7 @@ public class ContosoUniversityFixture : IDisposable
         {
             // Since there are no transactions, the same database needs to be created every time.
             var options = new DbContextOptionsBuilder<SchoolContext>()
-                .UseInMemoryDatabase(databaseName ?? nameof(ContosoUniversityFixture))
+                .UseInMemoryDatabase(databaseName)
                 .ConfigureWarnings(o => o.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
@@ -68,11 +77,6 @@ public class ContosoUniversityFixture : IDisposable
         DbInitializer.Initialize(context);
 
         context.SaveChanges();
-    }
-
-    public static ContosoUniversityFixture WithName(string databaseName)
-    {
-        return new(databaseName);
     }
 
 }

@@ -5,12 +5,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity.Repositories;
 
-public class StudentRepositoryTests(
-    ContosoUniversityFixture fixture,
-    ITestOutputHelper output)
-    : IClassFixture<ContosoUniversityFixture>
+public class StudentRepositoryTests(ITestOutputHelper output)
+    : IDisposable
 {
-    private readonly ContosoUniversityFixture _fixture = fixture.UseLogger(output.WriteLine);
+    private readonly ContosoUniversityFixture _fixture
+        = ContosoUniversityFixture.WithName(nameof(StudentRepositoryTests))
+            .UseLogger(output.WriteLine);
+
+    public void Dispose()
+    {
+        _fixture.Dispose();
+        GC.SuppressFinalize(this);
+    }
 
     [Fact]
     public async Task FindAllAsync_WhenCalled_ReturnsAllRecords()

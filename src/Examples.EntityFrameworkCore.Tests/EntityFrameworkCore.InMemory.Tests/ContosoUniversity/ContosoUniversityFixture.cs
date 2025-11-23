@@ -3,6 +3,7 @@ using ContosoUniversity.Data;
 using ContosoUniversity.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity;
@@ -14,19 +15,34 @@ public class ContosoUniversityFixture : IDisposable
     private readonly ServiceProvider _serviceProvider;
     private Action<string>? _logging;
 
-    public ContosoUniversityFixture() : this(null)
-    { }
-
-    private ContosoUniversityFixture(string? databaseName)
+    public ContosoUniversityFixture() : this(nameof(ContosoUniversityFixture))
     {
+        // The scope of an In Memory database is determined by the database Name and transactions do not work, 
+        // so sharing it complicates testing.
+    }
+
+    public static ContosoUniversityFixture WithName(string databaseName)
+    {
+        // We'll create a factory method to leave dependency injection in Xunit as an option.
+        return new(databaseName);
+    }
+
+    private ContosoUniversityFixture(string databaseName)
+    {
+        Dictionary<string, string?> configValues = [];
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(configValues)
+            .Build();
+
         var services = new ServiceCollection();
+        services.AddSingleton<IConfiguration>(configuration);
         services.AddLoggingForFixtures(_logging);
 
         services.AddTransient(service =>
         {
             // Since there are no transactions, the same database needs to be created every time.
             var options = new DbContextOptionsBuilder<SchoolContext>()
-                .UseInMemoryDatabase(databaseName ?? nameof(ContosoUniversityFixture))
+                .UseInMemoryDatabase(databaseName)
                 .ConfigureWarnings(o => o.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
@@ -68,11 +84,6 @@ public class ContosoUniversityFixture : IDisposable
         DbInitializer.Initialize(context);
 
         context.SaveChanges();
-    }
-
-    public static ContosoUniversityFixture WithName(string databaseName)
-    {
-        return new(databaseName);
     }
 
 }

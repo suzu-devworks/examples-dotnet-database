@@ -18,8 +18,9 @@ First, make sure you have the password for your database instance ready.
 For example:
 
 ```shell
-cat /dev/urandom | tr -dc 'a-zA-Z0-9!@#\$%&/:;\^()_+\-=<>?' | fold -w 24 | head -n 1 > .password.txt
+cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9!@#\$%&/:;\^()_+\-=<>?' | fold -w 24 | head -n 1 > .db_password.txt
 ```
+<!-- spell-checker: words urandom CTYPE -->
 
 ## Multiple database environments
 

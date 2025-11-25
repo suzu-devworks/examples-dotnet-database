@@ -19,7 +19,15 @@ public class DateOnlyTypeHandler(DbType dbType = DbType.Date)
 
     public override DateOnly Parse(object value)
     {
-        if (value is int @intValue)
+        if (value is DateOnly @dateOnly)
+        {
+            return @dateOnly;
+        }
+        else if (value is DateTime @dateTimeValue)
+        {
+            return DateOnly.FromDateTime(dateTimeValue);
+        }
+        else if (value is int @intValue)
         {
             var year = @intValue / 10000;
             var month = (@intValue - year * 10000) / 100;
@@ -27,12 +35,10 @@ public class DateOnlyTypeHandler(DbType dbType = DbType.Date)
 
             return new DateOnly(year, month, day);
         }
-        else if (value is DateTime @dateTimeValue)
+        else
         {
-            return DateOnly.FromDateTime(dateTimeValue);
+            throw new NotSupportedException();
         }
-
-        throw new NotSupportedException();
     }
 
     public static void Initialize()

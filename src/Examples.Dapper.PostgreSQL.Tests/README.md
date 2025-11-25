@@ -105,6 +105,9 @@ dotnet add package Npgsql
 dotnet add package Dapper.SqlBuilder
 dotnet add package Sqlify.Dapper
 
+# warning NU1903: Package 'Oracle.ManagedDataAccess.Core' 2.19.110 has a known high severity vulnerability.
+dotnet add package Oracle.ManagedDataAccess.Core
+
 dotnet add reference ../Examples.Dapper/
 dotnet add reference ../Examples.Various/
 dotnet add reference ../ContosoUniversity/

@@ -2,45 +2,47 @@ using ContosoUniversity.Abstraction;
 using ContosoUniversity.Data;
 using ContosoUniversity.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity;
+namespace Examples.EntityFrameworkCore.SQLite.Tests.ContosoUniversity;
 
 public class ContosoUniversityFixture : IDisposable
 {
     private static readonly Lock _lock = new();
+    private static bool _databaseInitialized;
 
     private readonly ServiceProvider _serviceProvider;
     private Action<string>? _logging;
 
     public ContosoUniversityFixture()
     {
+        Dictionary<string, string?> configValues = [];
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+           .AddInMemoryCollection(configValues)
+            .Build();
+
         var services = new ServiceCollection();
+        services.AddSingleton<IConfiguration>(configuration);
         services.AddLoggingForFixtures(_logging);
 
-        services.AddTransient(service =>
-        {
-            // Since there are no transactions, the same database needs to be created every time.
-            var options = new DbContextOptionsBuilder<SchoolContext>()
-                .UseInMemoryDatabase(nameof(ContosoUniversityFixture))
-                .ConfigureWarnings(o => o.Ignore(InMemoryEventId.TransactionIgnoredWarning))
-                .Options;
+        var connectionString = @"Data Source=Sharable:Mode=Memory;Cache=Shared";
+        services.AddDbContext<SchoolContext>(builder
+            => builder.UseSqlite(connectionString)
+        );
 
-            var context = new SchoolContext(options);
-
-            lock (_lock)
-            {
-                InitializeDatabase(context);
-            }
-
-            return context;
-        });
-
-        // Since it's necessary to recreate the `DbContext` every time, it's a transient scope.
-        services.AddTransient<IStudentRepository, StudentRepository>();
+        services.AddScoped<IStudentRepository, StudentRepository>();
 
         _serviceProvider = services.BuildServiceProvider();
+
+        lock (_lock)
+        {
+            if (!_databaseInitialized)
+            {
+                InitializeDatabase();
+                _databaseInitialized = true;
+            }
+        }
     }
 
     public void Dispose()
@@ -57,8 +59,10 @@ public class ContosoUniversityFixture : IDisposable
         return this;
     }
 
-    private static void InitializeDatabase(SchoolContext context)
+    private void InitializeDatabase()
     {
+        var context = ServiceProvider.GetRequiredService<SchoolContext>();
+
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
 

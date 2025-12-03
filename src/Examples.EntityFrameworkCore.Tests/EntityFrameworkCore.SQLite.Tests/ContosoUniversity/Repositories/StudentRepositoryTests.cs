@@ -3,7 +3,7 @@ using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity.Repositories;
+namespace Examples.EntityFrameworkCore.SQLite.Tests.ContosoUniversity.Repositories;
 
 public class StudentRepositoryTests(
     ContosoUniversityFixture fixture,
@@ -43,7 +43,7 @@ public class StudentRepositoryTests(
     {
         using var scoped = _fixture.ServiceProvider.CreateScope();
         var context = scoped.ServiceProvider.GetRequiredService<SchoolContext>();
-        await context.Database.BeginTransactionAsync(TestContext.Current.CancellationToken);
+        using var transaction = await context.Database.BeginTransactionAsync(TestContext.Current.CancellationToken);
 
         var repository = scoped.ServiceProvider.GetRequiredService<IStudentRepository>();
 
@@ -51,7 +51,7 @@ public class StudentRepositoryTests(
         {
             FirstMidName = "Hoge",
             LastName = "Foo",
-            EnrollmentDate = DateTime.Parse("2022-10-01")
+            EnrollmentDate = DateTime.Parse("2022-10-01"),
         };
         // spell-checker: words Hoge
 

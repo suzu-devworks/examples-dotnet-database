@@ -1,5 +1,6 @@
 # examples-dotnet-database
 
+![Dynamic XML Badge](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsuzu-devworks%2Fexamples-dotnet-database%2Frefs%2Fheads%2Fmain%2Fsrc%2FDirectory.Build.props&query=%2F%2FLTSFrameworks&logo=dotnet&label=Frameworks)
 [![build](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/dotnet-build.yml)
 [![CodeQL Advanced](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/codeql.yml/badge.svg)](https://github.com/suzu-devworks/examples-dotnet-database/actions/workflows/codeql.yml)
 
@@ -18,8 +19,9 @@ First, make sure you have the password for your database instance ready.
 For example:
 
 ```shell
-cat /dev/urandom | tr -dc 'a-zA-Z0-9!@#\$%&/:;\^()_+\-=<>?' | fold -w 24 | head -n 1 > .password.txt
+cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9!@#\$%&/:;\^()_+\-=<>?' | fold -w 24 | head -n 1 > .db_password.txt
 ```
+<!-- spell-checker: words urandom CTYPE -->
 
 ## Multiple database environments
 

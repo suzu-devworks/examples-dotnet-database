@@ -33,4 +33,8 @@ dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests \
 dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests \
     set ConnectionStrings:ProductCatalogs "Host=${POSTGRES_SERVICE};Database=product_catalogs;Username=operator;Password=${password}"
 dotnet user-secrets --project src/Examples.Dapper.PostgreSQL.Tests list
+
+dotnet user-secrets --project src/Examples.FluentMigrator.PostgreSQL \
+    set ConnectionStrings:Default "Host=${POSTGRES_SERVICE};Database=examples;Username=postgres;Password=${password}"
+dotnet user-secrets --project src/Examples.FluentMigrator.PostgreSQL list
 fi

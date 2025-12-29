@@ -7,11 +7,11 @@ public class V1_0_0_001_CreateInitialSchema : Migration
 {
     public override void Up()
     {
-        Create.Schema("migration_example");
+        Create.Schema(Schemas.Default);
     }
 
     public override void Down()
     {
-        Delete.Schema("migration_example");
+        Delete.Schema(Schemas.Default);
     }
 }

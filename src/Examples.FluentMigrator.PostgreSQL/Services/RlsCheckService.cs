@@ -16,7 +16,7 @@ public class RlsCheckService(
     private readonly string? _connectionString = configuration.GetConnectionString("Default");
 
     private readonly List<string> _rlsRequiredTables = [
-        "public.example"
+        "fluent_migrator_example.customers"
     ];
 
     public async Task CheckAllTableAsync(CancellationToken cancellationToken = default)
@@ -90,7 +90,7 @@ public class RlsCheckService(
         const string query = """
             SELECT COUNT(*)
             FROM pg_policy p
-            INNER JOIN og_class c ON p.polrelid = c.oid
+            INNER JOIN pg_class c ON p.polrelid = c.oid
             WHERE c.relname = @tableName
             AND relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = @schemaName)
             """;

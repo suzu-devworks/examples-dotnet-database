@@ -36,9 +36,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations/" />
-    <Folder Include="Migrations/V1_0_0/" />
-  </ItemGroup>
-
 </Project>

@@ -11,6 +11,7 @@ namespace Examples.FluentMigrator.PostgreSQL.Services;
 /// <param name="logger"></param>
 public class MigrationService(
     IMigrationRunner migrationRunner,
+    IVersionLoader versionLoader,
     RlsCheckService rlsCheckService,
     ILogger<MigrationService> logger)
 {
@@ -77,6 +78,17 @@ public class MigrationService(
             logger.LogError(ex, "Failed to rollback to version {version}", version);
             throw;
         }
+    }
+
+    /// <summary>
+    /// Gets the latest migration version.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<long> GetLatestVersionAsync(CancellationToken cancellationToken = default)
+    {
+        var latestVersion = await Task.Run(() => versionLoader.VersionInfo.Latest(), cancellationToken);
+        return latestVersion;
     }
 
     /// <summary>

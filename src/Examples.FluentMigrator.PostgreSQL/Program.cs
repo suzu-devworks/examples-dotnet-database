@@ -1,7 +1,9 @@
 using System.Reflection;
 using ConsoleAppFramework;
+using Examples.FluentMigrator.PostgreSQL.Migrations;
 using Examples.FluentMigrator.PostgreSQL.Services;
 using FluentMigrator.Runner;
+using FluentMigrator.Runner.VersionTableInfo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -43,6 +45,7 @@ app.ConfigureServices((context, con2, services) =>
             .WithGlobalConnectionString(configuration.GetConnectionString("Default"))
             .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations()
         ).AddLogging(lb => lb.AddFluentMigratorConsole());
+    services.AddSingleton<IVersionTableMetaData, CustomVersionTableMetaData>();
 
     // Add services
     services.AddSingleton<MigrationService>();

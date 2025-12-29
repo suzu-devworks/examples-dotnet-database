@@ -1,0 +1,19 @@
+{
+  "version": "0.2",
+  "ignorePaths": [],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "appsettings",
+    "Npgsql",
+    "nspname",
+    "polrelid",
+    "relname",
+    "relnamespace",
+    "relrowsecurity"
+  ],
+  "ignoreWords": [],
+  "import": [
+    "../../.vscode/cspell.json"
+  ]
+}

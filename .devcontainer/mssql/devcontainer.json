@@ -12,7 +12,7 @@
     "mssql"
   ],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "postAttachCommand": "/bin/sh ./.devcontainer/postAttachCommand.sh",
+  "postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
   "remoteEnv": {
     "MSSQL_SERVICE": "mssql",
     "POSTGRES_SERVICE": ""

@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "name": ".NET Core Launch (console)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Examples.FluentMigrator.PostgreSQL/bin/Debug/net10.0/Examples.FluentMigrator.PostgreSQL.dll",
+      "args": [
+        "migrate"
+      ],
+      "cwd": "${workspaceFolder}/src/Examples.FluentMigrator.PostgreSQL",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    }
+  ]
+}

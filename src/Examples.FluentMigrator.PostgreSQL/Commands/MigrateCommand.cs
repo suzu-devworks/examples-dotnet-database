@@ -21,7 +21,7 @@ public class MigrateCommand(
     /// <param name="version">-v, The specific version to migrate to. If not provided, migrates to the latest version.</param>
     /// <returns></returns>
     [Command("migrate")]
-    public async Task ExecuteAsync(bool withRlsCheck = true, long? version = null)
+    public async Task ExecuteAsync(bool withRlsCheck = true, [HideDefaultValue] long? version = null)
     {
         try
         {

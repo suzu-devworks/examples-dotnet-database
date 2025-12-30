@@ -2,6 +2,7 @@ using ContosoUniversity.Abstraction;
 using ContosoUniversity.Data;
 using ContosoUniversity.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.EntityFrameworkCore.SQLite.Tests.ContosoUniversity;
@@ -16,7 +17,13 @@ public class ContosoUniversityFixture : IDisposable
 
     public ContosoUniversityFixture()
     {
+        Dictionary<string, string?> configValues = [];
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+           .AddInMemoryCollection(configValues)
+            .Build();
+
         var services = new ServiceCollection();
+        services.AddSingleton<IConfiguration>(configuration);
         services.AddLoggingForFixtures(_logging);
 
         var connectionString = @"Data Source=Sharable:Mode=Memory;Cache=Shared";

@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ContosoCorporation/ContosoCorporation.csproj" />
+    <Project Path="src/ContosoUniversity/ContosoUniversity.csproj" />
+    <Project Path="src/Examples.Dapper.PostgreSQL.Tests/Examples.Dapper.PostgreSQL.Tests.csproj" />
+    <Project Path="src/Examples.Dapper.SqlServer.Tests/Examples.Dapper.SqlServer.Tests.csproj" />
+    <Project Path="src/Examples.Dapper/Examples.Dapper.csproj" />
+    <Project Path="src/Examples.EntityFrameworkCore.PostgreSQL.Tests/Examples.EntityFrameworkCore.PostgreSQL.Tests.csproj" />
+    <Project Path="src/Examples.EntityFrameworkCore.SqlServer.Tests/Examples.EntityFrameworkCore.SqlServer.Tests.csproj" />
+    <Project Path="src/Examples.EntityFrameworkCore.Tests/Examples.EntityFrameworkCore.Tests.csproj" />
+    <Project Path="src/Examples.EntityFrameworkCore/Examples.EntityFrameworkCore.csproj" />
+    <Project Path="src/Examples.FluentMigrator.PostgreSQL/Examples.FluentMigrator.PostgreSQL.csproj" />
+    <Project Path="src/Examples.Various/Examples.Various.csproj" />
+  </Folder>
+</Solution>

@@ -9,7 +9,7 @@ namespace Examples.EntityFrameworkCore.InMemory.Tests.ContosoUniversity;
 
 public class ContosoUniversityFixture : IDisposable
 {
-    private static readonly Lock _lock = new();
+    private static readonly Lock Lock = new();
 
     private readonly ServiceProvider _serviceProvider;
     private Action<string>? _logging;
@@ -29,7 +29,7 @@ public class ContosoUniversityFixture : IDisposable
 
             var context = new SchoolContext(options);
 
-            lock (_lock)
+            lock (Lock)
             {
                 InitializeDatabase(context);
             }

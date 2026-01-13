@@ -9,7 +9,7 @@ namespace Examples.Dapper.PostgreSQL.Tests.ContosoUniversity;
 
 public class ContosoUniversityFixture : IDisposable
 {
-    private static readonly Lock _lock = new();
+    private static readonly Lock Lock = new();
     private static bool _databaseInitialized;
 
     private readonly ServiceProvider _serviceProvider;
@@ -30,7 +30,7 @@ public class ContosoUniversityFixture : IDisposable
 
         _serviceProvider = services.BuildServiceProvider();
 
-        lock (_lock)
+        lock (Lock)
         {
             if (!_databaseInitialized)
             {
@@ -69,19 +69,22 @@ public class ContosoUniversityFixture : IDisposable
             ?? throw new InvalidOperationException("ConnectionStrings:ContosoUniversity is required.");
 
         services.AddDbConnectionFactory(builder => builder.UseNpgsql(connectionString));
-
 #if USE_FACTORY
+
         services.AddDbConnectionFactory(builder => builder.UseNpgsql(connectionString));
 
         services.AddScoped<IStudentRepository, StudentFactoryRepository>();
         logger.LogInformation("Use Factory.");
+
 #else
+
         services.AddKeyedDbDataSource(
             DataSourceKeys.ContosoUniversity,
             builder => builder.UseNpgsql(connectionString));
 
         services.AddScoped<IStudentRepository, StudentRepository>();
         logger.LogInformation("Use DataSource.");
+
 #endif
 
     }

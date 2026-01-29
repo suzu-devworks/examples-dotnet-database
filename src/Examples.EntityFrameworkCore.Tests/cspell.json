@@ -3,7 +3,11 @@
   "ignorePaths": [],
   "dictionaryDefinitions": [],
   "dictionaries": [],
-  "words": [],
+  "words": [
+    "Nino",
+    "Olivetto",
+    "overposting"
+  ],
   "ignoreWords": [],
   "import": [
     "../../.vscode/cspell.json"

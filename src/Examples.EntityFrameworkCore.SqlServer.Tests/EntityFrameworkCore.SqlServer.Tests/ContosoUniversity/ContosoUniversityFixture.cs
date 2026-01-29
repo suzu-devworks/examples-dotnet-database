@@ -9,7 +9,7 @@ namespace Examples.EntityFrameworkCore.SqlServer.Tests.ContosoUniversity;
 
 public class ContosoUniversityFixture : IDisposable
 {
-    private static readonly Lock _lock = new();
+    private static readonly Lock Lock = new();
     private static bool _databaseInitialized;
 
     private readonly ServiceProvider _serviceProvider;
@@ -30,7 +30,7 @@ public class ContosoUniversityFixture : IDisposable
 
         _serviceProvider = services.BuildServiceProvider();
 
-        lock (_lock)
+        lock (Lock)
         {
             if (!_databaseInitialized)
             {

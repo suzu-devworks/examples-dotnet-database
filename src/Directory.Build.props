@@ -2,5 +2,7 @@
   <PropertyGroup>
     <LatestFramework>net10.0</LatestFramework>
     <LTSFrameworks>net8.0;net10.0</LTSFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
   </PropertyGroup>
 </Project>

@@ -5,15 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.Dapper.PostgreSQL.Tests.Dialect;
 
-public class DateTimeMappingTests(
-    DialectFixtures fixture,
-    ITestOutputHelper output)
-    : IClassFixture<DialectFixtures>
+public class DateTimeMappingTests(DialectFixtures fixture) : IClassFixture<DialectFixtures>
 {
     public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
     private readonly DbDataSource _dataSource = fixture
-            .UseLogger(output.WriteLine)
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s))
             .ServiceProvider.GetRequiredService<DbDataSource>();
 
     private record class DateTimeMapping<T>(T Value, string? DbTypeName);
@@ -59,6 +56,25 @@ public class DateTimeMappingTests(
 
         Assert.Equal(value, actual.Value);
         Assert.Equal("date", actual.DbTypeName);
+    }
+
+    [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
+    public async Task When_TimeOnlyIsConvertedByCustomTypeHandler_Then_DatabaseTypeIsCorrectlyMapped()
+    {
+        using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
+        var value = TimeOnly.Parse("12:34:56");
+
+        TimeOnlyTypeHandler.Initialize();
+
+        var actual = await connection.QuerySingleAsync<DateTimeMapping<TimeOnly>>(
+            new CommandDefinition("""
+                SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name;
+                """,
+                new { value },
+                cancellationToken: TestContext.Current.CancellationToken));
+
+        Assert.Equal(value, actual.Value);
+        Assert.Equal("time without time zone", actual.DbTypeName);
     }
 
     [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]

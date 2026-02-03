@@ -11,15 +11,12 @@ using Sqlify.Postgres;
 
 namespace Examples.Dapper.PostgreSQL.Tests.SqlBuilders;
 
-public class SqlifyDapperTests(
-    SqlBuilderFixtures fixture,
-    ITestOutputHelper output)
-    : IClassFixture<SqlBuilderFixtures>
+public class SqlifyDapperTests(SqlBuilderFixtures fixture) : IClassFixture<SqlBuilderFixtures>
 {
     public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
     private readonly DbDataSource _dataSource = fixture
-            .UseLogger(output.WriteLine)
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s))
             .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.ProductCatalogs);
 
     // The question is, how do we generate this?

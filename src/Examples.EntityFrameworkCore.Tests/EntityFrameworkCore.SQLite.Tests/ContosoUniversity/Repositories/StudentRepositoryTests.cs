@@ -5,12 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.EntityFrameworkCore.SQLite.Tests.ContosoUniversity.Repositories;
 
-public class StudentRepositoryTests(
-    ContosoUniversityFixture fixture,
-    ITestOutputHelper output)
-    : IClassFixture<ContosoUniversityFixture>
+public class StudentRepositoryTests(ContosoUniversityFixture fixture) : IClassFixture<ContosoUniversityFixture>
 {
-    private readonly ContosoUniversityFixture _fixture = fixture.UseLogger(output.WriteLine);
+    private readonly ContosoUniversityFixture _fixture = fixture
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s));
 
     [Fact]
     public async Task FindAllAsync_WhenCalled_ReturnsAllRecords()

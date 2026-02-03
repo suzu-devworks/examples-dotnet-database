@@ -5,14 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.Dapper.PostgreSQL.Tests.ContosoUniversity.Repositories;
 
-public class StudentRepositoryTests(
-    ContosoUniversityFixture fixture,
-    ITestOutputHelper output)
-    : IClassFixture<ContosoUniversityFixture>
+public class StudentRepositoryTests(ContosoUniversityFixture fixture) : IClassFixture<ContosoUniversityFixture>
 {
     public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
-    private readonly ContosoUniversityFixture _fixture = fixture.UseLogger(output.WriteLine);
+    private readonly ContosoUniversityFixture _fixture = fixture
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s));
 
     [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
     public async Task FindAllAsync_WhenCalled_ReturnsAllRecords()

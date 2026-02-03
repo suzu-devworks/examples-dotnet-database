@@ -2,8 +2,10 @@ using Microsoft.Data.SqlClient;
 
 namespace Examples.Dapper.SqlServer.Tests.Dialect;
 
-public class ConnectionStringTests(ITestOutputHelper output)
+public class ConnectionStringTests
 {
+    private ITestOutputHelper? Output => TestContext.Current.TestOutputHelper;
+
     [Fact]
     public void When_TimeoutExplicitlySpecifiedInConnectionString_Then_TimeoutPropertyMatchesSpecifiedValue()
     {
@@ -12,7 +14,7 @@ public class ConnectionStringTests(ITestOutputHelper output)
         using (var connection = new SqlConnection(builder.ConnectionString))
         using (var command = connection.CreateCommand())
         {
-            output.WriteLine($"Default ConnectionString: {connection.ConnectionString}");
+            Output?.WriteLine($"Default ConnectionString: {connection.ConnectionString}");
             Assert.Equal(15, connection.ConnectionTimeout);
             Assert.Equal(30, command.CommandTimeout);
         }
@@ -26,7 +28,7 @@ public class ConnectionStringTests(ITestOutputHelper output)
         using (var connection = new SqlConnection(updated.ConnectionString))
         using (var command = connection.CreateCommand())
         {
-            output.WriteLine($"Updated ConnectionString: {connection.ConnectionString}");
+            Output?.WriteLine($"Updated ConnectionString: {connection.ConnectionString}");
             Assert.Equal(123, connection.ConnectionTimeout);
             Assert.Equal(345, command.CommandTimeout);
         }

@@ -6,15 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.Dapper.PostgreSQL.Tests.SqlBuilders;
 
-public class DapperSqlBuilderTests(
-    SqlBuilderFixtures fixture,
-    ITestOutputHelper output)
-    : IClassFixture<SqlBuilderFixtures>
+public class DapperSqlBuilderTests(SqlBuilderFixtures fixture) : IClassFixture<SqlBuilderFixtures>
 {
     public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
     private readonly DbDataSource _dataSource = fixture
-            .UseLogger(output.WriteLine)
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s))
             .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.ProductCatalogs);
 
     [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]

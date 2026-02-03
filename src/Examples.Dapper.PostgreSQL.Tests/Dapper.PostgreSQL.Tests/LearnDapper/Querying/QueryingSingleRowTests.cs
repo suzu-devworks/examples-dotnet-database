@@ -6,15 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.Dapper.PostgreSQL.Tests.LearnDapper.Querying;
 
-public class QueryingSingleRowTests(
-    LearnDapperFixtures fixture,
-    ITestOutputHelper output)
-    : IClassFixture<LearnDapperFixtures>
+public class QueryingSingleRowTests(LearnDapperFixtures fixture) : IClassFixture<LearnDapperFixtures>
 {
     public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
     private readonly DbDataSource _dataSource = fixture
-            .UseLogger(output.WriteLine)
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s))
             .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.ProductCatalogs);
 
     [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
@@ -26,7 +23,7 @@ public class QueryingSingleRowTests(
         var command = new CommandDefinition(sql, new { productID = 1 },
             cancellationToken: TestContext.Current.CancellationToken);
 
-        // In the case of a single item, there are no particular problems with any of the options, 
+        // In the case of a single item, there are no particular problems with any of the options,
         // so "Single" seems to be the clearest in terms of intent.
 
         var single = await connection.QuerySingleAsync<Product>(command);

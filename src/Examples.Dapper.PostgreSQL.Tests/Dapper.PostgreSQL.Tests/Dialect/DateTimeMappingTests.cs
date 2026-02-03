@@ -62,6 +62,25 @@ public class DateTimeMappingTests(
     }
 
     [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
+    public async Task When_TimeOnlyIsConvertedByCustomTypeHandler_Then_DatabaseTypeIsCorrectlyMapped()
+    {
+        using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);
+        var value = TimeOnly.Parse("12:34:56");
+
+        TimeOnlyTypeHandler.Initialize();
+
+        var actual = await connection.QuerySingleAsync<DateTimeMapping<TimeOnly>>(
+            new CommandDefinition("""
+                SELECT @value AS value, CAST(pg_typeof(@value) as TEXT) AS db_type_name;
+                """,
+                new { value },
+                cancellationToken: TestContext.Current.CancellationToken));
+
+        Assert.Equal(value, actual.Value);
+        Assert.Equal("time without time zone", actual.DbTypeName);
+    }
+
+    [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]
     public async Task When_DateTimeOffsetIsConvertedByCustomTypeHandler_Then_DatabaseTypeIsCorrectlyMapped()
     {
         using var connection = await _dataSource.OpenConnectionAsync(TestContext.Current.CancellationToken);

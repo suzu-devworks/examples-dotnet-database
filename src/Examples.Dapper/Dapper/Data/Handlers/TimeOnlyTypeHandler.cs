@@ -12,6 +12,7 @@ public class TimeOnlyTypeHandler(DbType dbType = DbType.Time)
         parameter.Value = dbType switch
         {
             DbType.Time => value,
+            DbType.Int32 => value.Hour * 10000 + value.Minute * 100 + value.Second,
             _ => throw new NotSupportedException(),
         };
     }

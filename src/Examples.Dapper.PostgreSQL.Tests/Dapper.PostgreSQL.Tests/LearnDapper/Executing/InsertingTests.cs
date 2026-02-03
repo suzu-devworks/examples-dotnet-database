@@ -7,15 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.Dapper.PostgreSQL.Tests.LearnDapper.Executing;
 
-public class InsertingTests(
-    LearnDapperFixtures fixture,
-    ITestOutputHelper output)
-    : IClassFixture<LearnDapperFixtures>
+public class InsertingTests(LearnDapperFixtures fixture) : IClassFixture<LearnDapperFixtures>
 {
     public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
     private readonly DbDataSource _dataSource = fixture
-            .UseLogger(output.WriteLine)
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s))
             .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.ProductCatalogs);
 
     [Fact(Skip = "DB is unavailable", SkipUnless = nameof(IsDBAvailable))]

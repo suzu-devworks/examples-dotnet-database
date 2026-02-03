@@ -17,7 +17,7 @@ public class DapperExtensionsTests : IClassFixture<SqlBuilderFixtures>
 
     private readonly DbDataSource _dataSource;
 
-    public DapperExtensionsTests(SqlBuilderFixtures fixture, ITestOutputHelper output)
+    public DapperExtensionsTests(SqlBuilderFixtures fixture)
     {
         // sync
 
@@ -28,14 +28,14 @@ public class DapperExtensionsTests : IClassFixture<SqlBuilderFixtures>
         DapperAsyncExtensions.SqlDialect = new PostgreSqlDialect();
 
         _dataSource = fixture
-            .UseLogger(output.WriteLine)
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s))
             .ServiceProvider.GetRequiredKeyedService<DbDataSource>(DataSourceKeys.ProductCatalogs);
     }
 
     private class SnakeCaseColumnPluralizedAutoClassMapper<T> : ClassMapper<T>
         where T : class
     {
-        // Using `PluralizedAutoClassMapper<T>` automatically pluralizes the table name even if I specify a name, 
+        // Using `PluralizedAutoClassMapper<T>` automatically pluralizes the table name even if I specify a name,
         // but I want to use the name exactly as specified, so I will not inherit from this class.
 
         public SnakeCaseColumnPluralizedAutoClassMapper()

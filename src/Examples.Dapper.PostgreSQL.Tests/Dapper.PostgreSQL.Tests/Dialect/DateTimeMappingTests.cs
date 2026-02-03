@@ -5,15 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.Dapper.PostgreSQL.Tests.Dialect;
 
-public class DateTimeMappingTests(
-    DialectFixtures fixture,
-    ITestOutputHelper output)
-    : IClassFixture<DialectFixtures>
+public class DateTimeMappingTests(DialectFixtures fixture) : IClassFixture<DialectFixtures>
 {
     public static bool IsDBAvailable => DatabaseEnvironment.IsAvailable;
 
     private readonly DbDataSource _dataSource = fixture
-            .UseLogger(output.WriteLine)
+            .UseLogger(s => TestContext.Current.TestOutputHelper?.WriteLine(s))
             .ServiceProvider.GetRequiredService<DbDataSource>();
 
     private record class DateTimeMapping<T>(T Value, string? DbTypeName);

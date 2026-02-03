@@ -13,9 +13,14 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
 
@@ -24,20 +29,29 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
            dotnet-version: '10.0.x'
-      - name: Info
+      - name: Display .NET info
         run: dotnet --info
 
       - name: Auth Github Nuget
-        run: dotnet nuget update source github --username suzu-devworks --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+        run: >
+          dotnet nuget update source github
+          --username suzu-devworks --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
 
       - name: Install Tools
         run: dotnet tool restore
-
       - name: Install dependencies
         run: dotnet restore
-        
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --no-build --configuration Release --verbosity normal
+        run: >
+          dotnet test --configuration Release --no-build --verbosity normal
+          --report-xunit-trx --results-directory ./TestResults
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ./TestResults
+          retention-days: 7
